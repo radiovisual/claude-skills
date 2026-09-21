@@ -1,0 +1,27 @@
+$ git fetch --tags origin
+
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/main
+
+$ git branch --show-current
+main
+
+$ git status --short
+
+$ git rev-list --count HEAD..origin/main
+0
+
+$ gh auth status
+✓ Logged in to github.com account release-bot
+
+$ gh run list --branch main --limit 1 --json status,conclusion -q '.[0] | [.status,.conclusion] | @tsv'
+completed	success
+
+$ gh repo view --json nameWithOwner -q .nameWithOwner
+acme/widget
+
+$ git tag --list --sort=-v:refname
+v2.1.0
+v2.0.0
+
+$ git log <latest tag>..HEAD --no-merges --format='%h%x09%s%x09%an%n%b'

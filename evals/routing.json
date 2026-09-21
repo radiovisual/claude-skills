@@ -1375,5 +1375,85 @@
     "split": "holdout",
     "group": "piv-fix-review-findings/piv-fix-review-findings-near-miss",
     "rationale": "Fixing a failing test is ordinary debugging, not acting on review findings."
+  },
+  {
+    "id": "semver-release-direct",
+    "owner": "semver-release",
+    "kind": "direct",
+    "prompt": "Cut a new SemVer release of this repo with release notes.",
+    "expected_skills": [
+      "semver-release"
+    ],
+    "split": "development",
+    "group": "semver-release/semver-release-direct",
+    "rationale": "Explicit release request."
+  },
+  {
+    "id": "semver-release-indirect",
+    "owner": "semver-release",
+    "kind": "indirect",
+    "prompt": "Everything we merged this month should go out to users as a new version on GitHub.",
+    "expected_skills": [
+      "semver-release"
+    ],
+    "split": "development",
+    "group": "semver-release/semver-release-indirect",
+    "rationale": "Shipping merged work as a new version is a release."
+  },
+  {
+    "id": "semver-release-negative",
+    "owner": "semver-release",
+    "kind": "negative",
+    "prompt": "Explain the difference between ~ and ^ version ranges in package.json.",
+    "expected_skills": [],
+    "split": "development",
+    "group": "semver-release/semver-release-negative",
+    "rationale": "A question about dependency ranges, not releasing this project."
+  },
+  {
+    "id": "semver-release-incomplete",
+    "owner": "semver-release",
+    "kind": "incomplete",
+    "prompt": "Release it.",
+    "expected_skills": [
+      "semver-release"
+    ],
+    "split": "development",
+    "group": "semver-release/semver-release-incomplete",
+    "rationale": "Terse request; the skill works out the version and notes itself."
+  },
+  {
+    "id": "semver-release-boundary",
+    "owner": "semver-release",
+    "kind": "boundary",
+    "prompt": "Open a pull request for my release-notes branch.",
+    "expected_skills": [
+      "piv-create-pr"
+    ],
+    "split": "development",
+    "group": "semver-release/semver-release-boundary",
+    "rationale": "Opening a PR is piv-create-pr's job even when the branch is about releases."
+  },
+  {
+    "id": "semver-release-near-miss",
+    "owner": "semver-release",
+    "kind": "near-miss",
+    "prompt": "Upgrade React to the latest major version in this project.",
+    "expected_skills": [],
+    "split": "holdout",
+    "group": "semver-release/semver-release-near-miss",
+    "rationale": "Mentions versions, but it's a dependency upgrade, not a release."
+  },
+  {
+    "id": "semver-release-boundary-commit",
+    "owner": "semver-release",
+    "kind": "boundary",
+    "prompt": "Commit my changes with a conventional commit message.",
+    "expected_skills": [
+      "piv-commit"
+    ],
+    "split": "development",
+    "group": "semver-release/semver-release-boundary-commit",
+    "rationale": "Writing a single commit belongs to piv-commit, not a release."
   }
 ]

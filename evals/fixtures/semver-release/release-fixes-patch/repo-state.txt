@@ -1,0 +1,33 @@
+$ git fetch --tags origin
+
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/main
+
+$ git branch --show-current
+main
+
+$ git status --short
+
+$ git rev-list --count HEAD..origin/main
+0
+
+$ gh auth status
+✓ Logged in to github.com account release-bot
+
+$ gh run list --branch main --limit 1 --json status,conclusion -q '.[0] | [.status,.conclusion] | @tsv'
+completed	success
+
+$ gh repo view --json nameWithOwner -q .nameWithOwner
+acme/widget
+
+$ git tag --list --sort=-v:refname
+2.3.0
+2.2.4
+2.2.3
+
+$ git log <latest tag>..HEAD --no-merges --format='%h%x09%s%x09%an%n%b'
+d4e5f6a	fix: retry webhook delivery on 503	Sam
+
+e5f6a7b	perf: cache currency rates for 10 minutes	Sam
+
+f6a7b8c	test: cover webhook retries	Kai

@@ -30,5 +30,9 @@
   {
     "skill": "piv-fix-review-findings",
     "prompt": "Use $piv-fix-review-findings with a review file containing one real bug, one out-of-scope refactor and one incorrect finding. Scope: fix the bug, defer the refactor. Add a test for the fix, run validation, and report fixed, deferred and dropped findings. Do not push."
+  },
+  {
+    "skill": "semver-release",
+    "prompt": "Use $semver-release --dry-run in a throwaway GitHub repository tagged v1.2.0 with one feat and one fix commit since. Show the proposed version, why, the release notes and the new VERSION.md, and stop before committing or publishing."
   }
 ]

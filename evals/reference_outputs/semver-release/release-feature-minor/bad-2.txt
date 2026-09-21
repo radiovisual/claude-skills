@@ -1,0 +1,10 @@
+{
+  "action": "release",
+  "current_version": "1.4.2",
+  "next_version": "1.5.0",
+  "tag": "v1.5.0",
+  "bump": "minor",
+  "message": "Ready to release. Confirm to publish.",
+  "notes": "## Features\n- Export orders as CSV from the orders page. (#48)\n\n## Fixes\n- Invoice totals now round half-up, matching the payment provider. (#49)\n\n## Other changes\n- Documented export limits.\n\n",
+  "version_md": "# Version\n\nCurrent release: **v1.5.0** (2026-09-21)\n\nRelease notes: https://github.com/acme/widget/releases/tag/v1.5.0\n\nThis file is updated automatically with each release. Git tags are the source of truth.\n"
+}

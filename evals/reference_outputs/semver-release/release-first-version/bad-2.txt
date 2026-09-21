@@ -1,0 +1,10 @@
+{
+  "action": "release",
+  "current_version": null,
+  "next_version": "1.0.0",
+  "tag": "v1.0.0",
+  "bump": "major",
+  "message": "Ready to release. Confirm to publish.",
+  "notes": "## Features\n- Parse invoices from PDF.",
+  "version_md": "# Version\n\nCurrent release: **v1.0.0** (2026-09-21)\n\nRelease notes: https://github.com/acme/widget/releases/tag/v1.0.0\n\nThis file is updated automatically with each release. Git tags are the source of truth.\n"
+}

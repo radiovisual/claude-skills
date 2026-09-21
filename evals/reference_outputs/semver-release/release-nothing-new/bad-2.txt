@@ -1,0 +1,10 @@
+{
+  "action": "ask",
+  "current_version": "2.1.0",
+  "next_version": null,
+  "tag": null,
+  "bump": null,
+  "message": "Nothing new. Release anyway?",
+  "notes": null,
+  "version_md": null
+}

@@ -1,0 +1,10 @@
+{
+  "action": "release",
+  "current_version": "1.8.3",
+  "next_version": "1.9.0",
+  "tag": "v1.9.0",
+  "bump": "minor",
+  "message": "Ready to release. Confirm to publish.",
+  "notes": "## ⚠️ Breaking changes\n- The config key `timeout` is now `timeoutMs`. Rename it in your config. (#51)\n\n## Fixes\n- Empty order lists no longer cause an error. (#52)\n\n**Full changelog**: https://github.com/acme/widget/compare/v1.8.3...v2.0.0",
+  "version_md": "# Version\n\nCurrent release: **v2.0.0** (2026-09-21)\n\nRelease notes: https://github.com/acme/widget/releases/tag/v2.0.0\n\nThis file is updated automatically with each release. Git tags are the source of truth.\n"
+}

@@ -1,0 +1,10 @@
+{
+  "action": "release",
+  "current_version": "2.3.0",
+  "next_version": "2.4.0",
+  "tag": "2.4.0",
+  "bump": "minor",
+  "message": "Ready to release. Confirm to publish.",
+  "notes": "## Fixes\n- Webhook delivery is retried when the receiver returns 503.\n- Currency rates are cached for 10 minutes, making checkout faster.\n\n**Full changelog**: https://github.com/acme/widget/compare/2.3.0...2.3.1",
+  "version_md": "# Version\n\nCurrent release: **2.3.1** (2026-09-21)\n\nRelease notes: https://github.com/acme/widget/releases/tag/2.3.1\n\nThis file is updated automatically with each release. Git tags are the source of truth.\n"
+}

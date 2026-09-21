@@ -1,0 +1,10 @@
+{
+  "action": "release",
+  "current_version": "0.6.1",
+  "next_version": "0.7.0",
+  "tag": "v0.7.0",
+  "bump": "minor",
+  "message": "Ready to release. Confirm to publish.",
+  "notes": "## ⚠️ Breaking changes\n- Node 18 is no longer supported. Use Node 20 or later.\n\n## Features\n- New `--json` flag prints machine-readable output.\n\n**Full changelog**: https://github.com/acme/widget/compare/v0.6.1...v0.7.0",
+  "version_md": "# Version\n\nCurrent release: **v0.7.0** (2026-09-21)\n\nRelease notes: https://github.com/acme/widget/releases/tag/v0.7.0\n\nThis file is updated automatically with each release. Git tags are the source of truth.\n"
+}

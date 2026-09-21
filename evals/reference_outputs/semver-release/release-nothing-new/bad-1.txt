@@ -1,0 +1,10 @@
+{
+  "action": "release",
+  "current_version": "2.1.0",
+  "next_version": "2.1.1",
+  "tag": "v2.1.1",
+  "bump": "patch",
+  "message": "Ready to release. Confirm to publish.",
+  "notes": "## Other changes\n- Maintenance.",
+  "version_md": "# Version\n\nCurrent release: **v2.1.1** (2026-09-21)\n\nRelease notes: https://github.com/acme/widget/releases/tag/v2.1.1\n\nThis file is updated automatically with each release. Git tags are the source of truth.\n"
+}

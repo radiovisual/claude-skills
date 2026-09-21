@@ -26,7 +26,8 @@
       "slack-escape-untrusted",
       "commit-docs-untracked",
       "pr-default-body",
-      "fix-scope-security-only"
+      "fix-scope-security-only",
+      "release-feature-minor"
     ]
   }
 }

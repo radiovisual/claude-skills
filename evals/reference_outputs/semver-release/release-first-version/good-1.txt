@@ -1,0 +1,10 @@
+{
+  "action": "ask",
+  "current_version": null,
+  "next_version": "0.1.0",
+  "tag": null,
+  "bump": null,
+  "message": "There are no release tags yet. Should the first release be 0.1.0 (still changing) or 1.0.0 (stable public API)? I suggest 0.1.0.",
+  "notes": null,
+  "version_md": null
+}

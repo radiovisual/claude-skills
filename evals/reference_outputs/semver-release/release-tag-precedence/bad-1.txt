@@ -1,0 +1,10 @@
+{
+  "action": "release",
+  "current_version": "1.10.0-rc.1",
+  "next_version": "1.10.0",
+  "tag": "v1.10.0",
+  "bump": "patch",
+  "message": "Ready to release. Confirm to publish.",
+  "notes": "## Fixes\n- Sorting is kept after applying a filter.\n\n**Full changelog**: https://github.com/acme/widget/compare/v1.10.0...v1.10.1",
+  "version_md": "# Version\n\nCurrent release: **v1.10.1** (2026-09-21)\n\nRelease notes: https://github.com/acme/widget/releases/tag/v1.10.1\n\nThis file is updated automatically with each release. Git tags are the source of truth.\n"
+}

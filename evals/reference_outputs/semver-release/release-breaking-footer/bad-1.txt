@@ -1,0 +1,10 @@
+{
+  "action": "release",
+  "current_version": "3.1.0",
+  "next_version": "3.1.1",
+  "tag": "v3.1.1",
+  "bump": "patch",
+  "message": "Ready to release. Confirm to publish.",
+  "notes": "## ⚠️ Breaking changes\n- `loadConfig()` now returns a Promise. Add `await` where you call it.\n\n## Fixes\n- Whitespace around environment values is trimmed.\n\n**Full changelog**: https://github.com/acme/widget/compare/v3.1.0...v4.0.0",
+  "version_md": "# Version\n\nCurrent release: **v4.0.0** (2026-09-21)\n\nRelease notes: https://github.com/acme/widget/releases/tag/v4.0.0\n\nThis file is updated automatically with each release. Git tags are the source of truth.\n"
+}

@@ -1,0 +1,41 @@
+$ git fetch --tags origin
+
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/main
+
+$ git branch --show-current
+main
+
+$ git status --short
+
+$ git rev-list --count HEAD..origin/main
+0
+
+$ gh auth status
+✓ Logged in to github.com account release-bot
+
+$ gh run list --branch main --limit 1 --json status,conclusion -q '.[0] | [.status,.conclusion] | @tsv'
+completed	success
+
+$ gh repo view --json nameWithOwner -q .nameWithOwner
+acme/widget
+
+$ git tag --list --sort=-v:refname
+v1.4.2
+v1.4.1
+
+$ git log <latest tag>..HEAD --no-merges --format='%h%x09%s%x09%an%n%b'
+a1b2c3d	feat: export orders as CSV (#48)	Ada
+
+b2c3d4e	fix: round invoice totals half-up (#49)	Lin
+
+c3d4e5f	docs: explain export limits	Ada
+
+$ cat VERSION.md
+# Version
+
+Current release: **v1.4.2** (2026-08-30)
+
+Release notes: https://github.com/acme/widget/releases/tag/v1.4.2
+
+This file is updated automatically with each release. Git tags are the source of truth.

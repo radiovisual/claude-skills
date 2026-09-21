@@ -1,0 +1,10 @@
+{
+  "action": "ask",
+  "current_version": "1.4.2",
+  "next_version": null,
+  "tag": null,
+  "bump": null,
+  "message": "There are uncommitted changes. Include them in the release?",
+  "notes": null,
+  "version_md": null
+}

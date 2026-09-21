@@ -1,0 +1,732 @@
+[
+  {
+    "id": "release-feature-minor",
+    "skill": "semver-release",
+    "category": "bump",
+    "group": "semver-release/release-feature-minor",
+    "split": "development",
+    "prompt": "Cut a new release. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-feature-minor/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-feature-minor/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-feature-minor/bad-1.txt",
+        "fails": [
+          "next-version",
+          "tag",
+          "bump"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-feature-minor/bad-2.txt",
+        "fails": [
+          "compare-link"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "release",
+        "description": "Action is release"
+      },
+      {
+        "id": "current-version",
+        "op": "equals",
+        "path": [
+          "current_version"
+        ],
+        "value": "1.4.2",
+        "description": "Current version is 1.4.2"
+      },
+      {
+        "id": "next-version",
+        "op": "equals",
+        "path": [
+          "next_version"
+        ],
+        "value": "1.5.0",
+        "description": "Next version is 1.5.0"
+      },
+      {
+        "id": "tag",
+        "op": "equals",
+        "path": [
+          "tag"
+        ],
+        "value": "v1.5.0",
+        "description": "Tag is v1.5.0"
+      },
+      {
+        "id": "bump",
+        "op": "equals",
+        "path": [
+          "bump"
+        ],
+        "value": "minor",
+        "description": "Bump is minor"
+      },
+      {
+        "id": "grouped-notes",
+        "op": "contains_all",
+        "path": [
+          "notes"
+        ],
+        "value": [
+          "## Features",
+          "## Fixes"
+        ],
+        "description": "Notes are grouped into Features and Fixes"
+      },
+      {
+        "id": "compare-link",
+        "op": "contains",
+        "path": [
+          "notes"
+        ],
+        "value": "https://github.com/acme/widget/compare/v1.4.2...v1.5.0",
+        "description": "Notes end with the full changelog compare link"
+      }
+    ]
+  },
+  {
+    "id": "release-fixes-patch",
+    "skill": "semver-release",
+    "category": "bump",
+    "group": "semver-release/release-fixes-patch",
+    "split": "development",
+    "prompt": "Release what's on main. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-fixes-patch/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-fixes-patch/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-fixes-patch/bad-1.txt",
+        "fails": [
+          "next-version",
+          "bump"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-fixes-patch/bad-2.txt",
+        "fails": [
+          "unprefixed-tag"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "release",
+        "description": "Action is release"
+      },
+      {
+        "id": "current-version",
+        "op": "equals",
+        "path": [
+          "current_version"
+        ],
+        "value": "2.3.0",
+        "description": "Current version is 2.3.0"
+      },
+      {
+        "id": "next-version",
+        "op": "equals",
+        "path": [
+          "next_version"
+        ],
+        "value": "2.3.1",
+        "description": "Next version is 2.3.1"
+      },
+      {
+        "id": "bump",
+        "op": "equals",
+        "path": [
+          "bump"
+        ],
+        "value": "patch",
+        "description": "Bump is patch"
+      },
+      {
+        "id": "unprefixed-tag",
+        "op": "equals",
+        "path": [
+          "tag"
+        ],
+        "value": "2.3.1",
+        "description": "Keeps the project's unprefixed tag style"
+      }
+    ]
+  },
+  {
+    "id": "release-breaking-bang",
+    "skill": "semver-release",
+    "category": "bump",
+    "group": "semver-release/release-breaking-bang",
+    "split": "development",
+    "prompt": "Time for a release. Prepare it. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-breaking-bang/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-breaking-bang/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-breaking-bang/bad-1.txt",
+        "fails": [
+          "next-version",
+          "tag",
+          "bump"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-breaking-bang/bad-2.txt",
+        "fails": [
+          "breaking-first"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "release",
+        "description": "Action is release"
+      },
+      {
+        "id": "current-version",
+        "op": "equals",
+        "path": [
+          "current_version"
+        ],
+        "value": "1.8.3",
+        "description": "Current version is 1.8.3"
+      },
+      {
+        "id": "next-version",
+        "op": "equals",
+        "path": [
+          "next_version"
+        ],
+        "value": "2.0.0",
+        "description": "Next version is 2.0.0"
+      },
+      {
+        "id": "tag",
+        "op": "equals",
+        "path": [
+          "tag"
+        ],
+        "value": "v2.0.0",
+        "description": "Tag is v2.0.0"
+      },
+      {
+        "id": "bump",
+        "op": "equals",
+        "path": [
+          "bump"
+        ],
+        "value": "major",
+        "description": "Bump is major"
+      },
+      {
+        "id": "breaking-first",
+        "op": "matches",
+        "path": [
+          "notes"
+        ],
+        "value": "(?is)\\s*##[^\\n]*breaking[^\\n]*\\n.*(timeout).*## fixes.*",
+        "description": "Breaking changes come first and explain the renamed key"
+      }
+    ]
+  },
+  {
+    "id": "release-breaking-footer",
+    "skill": "semver-release",
+    "category": "bump",
+    "group": "semver-release/release-breaking-footer",
+    "split": "holdout",
+    "prompt": "Please cut the next version. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-breaking-footer/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-breaking-footer/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-breaking-footer/bad-1.txt",
+        "fails": [
+          "next-version",
+          "tag",
+          "bump"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-breaking-footer/bad-2.txt",
+        "fails": [
+          "next-version",
+          "tag",
+          "bump"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "release",
+        "description": "Action is release"
+      },
+      {
+        "id": "current-version",
+        "op": "equals",
+        "path": [
+          "current_version"
+        ],
+        "value": "3.1.0",
+        "description": "Current version is 3.1.0"
+      },
+      {
+        "id": "next-version",
+        "op": "equals",
+        "path": [
+          "next_version"
+        ],
+        "value": "4.0.0",
+        "description": "Next version is 4.0.0"
+      },
+      {
+        "id": "tag",
+        "op": "equals",
+        "path": [
+          "tag"
+        ],
+        "value": "v4.0.0",
+        "description": "Tag is v4.0.0"
+      },
+      {
+        "id": "bump",
+        "op": "equals",
+        "path": [
+          "bump"
+        ],
+        "value": "major",
+        "description": "Bump is major"
+      }
+    ]
+  },
+  {
+    "id": "release-zero-major",
+    "skill": "semver-release",
+    "category": "bump",
+    "group": "semver-release/release-zero-major",
+    "split": "development",
+    "prompt": "Make a release for the latest changes. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-zero-major/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-zero-major/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-zero-major/bad-1.txt",
+        "fails": [
+          "next-version",
+          "tag",
+          "bump"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-zero-major/bad-2.txt",
+        "fails": [
+          "next-version",
+          "tag",
+          "bump"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "release",
+        "description": "Action is release"
+      },
+      {
+        "id": "current-version",
+        "op": "equals",
+        "path": [
+          "current_version"
+        ],
+        "value": "0.6.1",
+        "description": "Current version is 0.6.1"
+      },
+      {
+        "id": "next-version",
+        "op": "equals",
+        "path": [
+          "next_version"
+        ],
+        "value": "0.7.0",
+        "description": "Next version is 0.7.0"
+      },
+      {
+        "id": "tag",
+        "op": "equals",
+        "path": [
+          "tag"
+        ],
+        "value": "v0.7.0",
+        "description": "Tag is v0.7.0"
+      },
+      {
+        "id": "bump",
+        "op": "equals",
+        "path": [
+          "bump"
+        ],
+        "value": "minor",
+        "description": "Bump is minor"
+      }
+    ]
+  },
+  {
+    "id": "release-tag-precedence",
+    "skill": "semver-release",
+    "category": "current-version",
+    "group": "semver-release/release-tag-precedence",
+    "split": "holdout",
+    "prompt": "Release the fixes on main. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-tag-precedence/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-tag-precedence/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-tag-precedence/bad-1.txt",
+        "fails": [
+          "current-version",
+          "next-version",
+          "tag"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-tag-precedence/bad-2.txt",
+        "fails": [
+          "current-version",
+          "next-version",
+          "tag"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "release",
+        "description": "Action is release"
+      },
+      {
+        "id": "current-version",
+        "op": "equals",
+        "path": [
+          "current_version"
+        ],
+        "value": "1.10.0",
+        "description": "Current version is 1.10.0"
+      },
+      {
+        "id": "next-version",
+        "op": "equals",
+        "path": [
+          "next_version"
+        ],
+        "value": "1.10.1",
+        "description": "Next version is 1.10.1"
+      },
+      {
+        "id": "tag",
+        "op": "equals",
+        "path": [
+          "tag"
+        ],
+        "value": "v1.10.1",
+        "description": "Tag is v1.10.1"
+      },
+      {
+        "id": "bump",
+        "op": "equals",
+        "path": [
+          "bump"
+        ],
+        "value": "patch",
+        "description": "Bump is patch"
+      }
+    ]
+  },
+  {
+    "id": "release-nothing-new",
+    "skill": "semver-release",
+    "category": "preflight",
+    "group": "semver-release/release-nothing-new",
+    "split": "development",
+    "prompt": "Cut a release. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-nothing-new/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-nothing-new/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-nothing-new/bad-1.txt",
+        "fails": [
+          "action"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-nothing-new/bad-2.txt",
+        "fails": [
+          "action"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "stop",
+        "description": "Action is stop"
+      },
+      {
+        "id": "current-version",
+        "op": "equals",
+        "path": [
+          "current_version"
+        ],
+        "value": "2.1.0",
+        "description": "Current version is 2.1.0"
+      },
+      {
+        "id": "no-tag",
+        "op": "equals",
+        "path": [
+          "tag"
+        ],
+        "value": null,
+        "description": "No new tag is proposed"
+      }
+    ]
+  },
+  {
+    "id": "release-dirty-tree",
+    "skill": "semver-release",
+    "category": "preflight",
+    "group": "semver-release/release-dirty-tree",
+    "split": "development",
+    "prompt": "Let's ship a new version. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-dirty-tree/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-dirty-tree/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-dirty-tree/bad-1.txt",
+        "fails": [
+          "action"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-dirty-tree/bad-2.txt",
+        "fails": [
+          "action"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "stop",
+        "description": "Action is stop"
+      }
+    ]
+  },
+  {
+    "id": "release-first-version",
+    "skill": "semver-release",
+    "category": "current-version",
+    "group": "semver-release/release-first-version",
+    "split": "holdout",
+    "prompt": "This project has never been released. Do the first release. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-first-version/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-first-version/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-first-version/bad-1.txt",
+        "fails": [
+          "action",
+          "proposed-first"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-first-version/bad-2.txt",
+        "fails": [
+          "action"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "ask",
+        "description": "Action is ask"
+      },
+      {
+        "id": "proposed-first",
+        "op": "one_of",
+        "path": [
+          "next_version"
+        ],
+        "value": [
+          "0.1.0",
+          "1.0.0"
+        ],
+        "description": "Proposes 0.1.0 or 1.0.0 for a first release"
+      }
+    ]
+  },
+  {
+    "id": "release-version-file",
+    "skill": "semver-release",
+    "category": "version-file",
+    "group": "semver-release/release-version-file",
+    "split": "development",
+    "prompt": "Prepare the release, including the VERSION.md update. Do not run git or gh; the command output below is the current state. Plan the release up to the point where you would ask the user to confirm. Return only JSON with \"action\" (\"release\" when ready to confirm, \"stop\" when a preflight check fails, \"ask\" when you need the user to decide first), \"current_version\" (SemVer without prefix, or null), \"next_version\" (proposed SemVer without prefix, or null), \"tag\" (the new tag name, or null), \"bump\" (\"major\", \"minor\", \"patch\" or null), \"message\" (what you tell the user), \"notes\" (release notes Markdown, or null) and \"version_md\" (the new VERSION.md content, or null).",
+    "inputs": [
+      "fixtures/semver-release/release-version-file/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/semver-release/release-version-file/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/semver-release/release-version-file/bad-1.txt",
+        "fails": [
+          "version-md-release-link"
+        ]
+      },
+      {
+        "path": "reference_outputs/semver-release/release-version-file/bad-2.txt",
+        "fails": [
+          "version-md-current"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "action",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "release",
+        "description": "Action is release"
+      },
+      {
+        "id": "next-version",
+        "op": "equals",
+        "path": [
+          "next_version"
+        ],
+        "value": "1.5.0",
+        "description": "Next version is 1.5.0"
+      },
+      {
+        "id": "tag",
+        "op": "equals",
+        "path": [
+          "tag"
+        ],
+        "value": "v1.5.0",
+        "description": "Tag is v1.5.0"
+      },
+      {
+        "id": "version-md-release-link",
+        "op": "contains",
+        "path": [
+          "version_md"
+        ],
+        "value": "https://github.com/acme/widget/releases/tag/v1.5.0",
+        "description": "VERSION.md links to the new release's notes"
+      },
+      {
+        "id": "version-md-current",
+        "op": "matches",
+        "path": [
+          "version_md"
+        ],
+        "value": "(?s)(?!.*v1\\.4\\.2).*v1\\.5\\.0.*",
+        "description": "VERSION.md names the new version and not the old one"
+      }
+    ]
+  }
+]

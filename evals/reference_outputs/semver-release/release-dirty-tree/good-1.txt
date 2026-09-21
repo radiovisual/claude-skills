@@ -1,0 +1,10 @@
+{
+  "action": "stop",
+  "current_version": "1.4.2",
+  "next_version": null,
+  "tag": null,
+  "bump": null,
+  "message": "There are uncommitted changes (src/export/csv.ts). Commit or stash them first; a release must match a commit.",
+  "notes": null,
+  "version_md": null
+}
