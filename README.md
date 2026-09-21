@@ -1,5 +1,7 @@
 # claude-skills
 
+[![Validate skills](https://github.com/radiovisual/claude-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/radiovisual/claude-skills/actions/workflows/validate.yml)
+
 Agent skills for Claude Code (and any agent that reads the `SKILL.md` format).
 Each skill is a folder with a short `SKILL.md` entrypoint and `references/`
 files the agent only opens when a task needs that detail.
