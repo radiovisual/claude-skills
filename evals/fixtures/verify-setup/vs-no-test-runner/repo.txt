@@ -1,0 +1,3 @@
+package.json:
+{"scripts": {"dev": "vite", "build": "vite build", "lint": "eslint ."}, "devDependencies": {"vite": "7.1.3", "eslint": "9.36.0"}}
+No test files and no test runner installed. Plain JavaScript (no TypeScript).

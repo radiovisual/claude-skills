@@ -1,0 +1,8 @@
+Root: README.md, backend/, .github/workflows/ci.yml
+backend/pyproject.toml:
+[project] name = "api"
+[dependency-groups] dev = ["pytest", "ruff", "mypy"]
+[tool.ruff] line-length = 100
+[tool.mypy] strict = true
+backend/tests/ exists. uv is used (backend/uv.lock).
+.github/workflows/ci.yml runs: cd backend && uv run pytest

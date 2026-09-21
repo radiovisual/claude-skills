@@ -1,0 +1,10 @@
+{
+  "mode": "feature",
+  "next_action": "interview",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "none",
+  "message": "Before planning: what does done look like, and what's out of scope?"
+}

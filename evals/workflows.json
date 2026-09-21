@@ -34,5 +34,13 @@
   {
     "skill": "semver-release",
     "prompt": "Use $semver-release --dry-run in a throwaway GitHub repository tagged v1.2.0 with one feat and one fix commit since. Show the proposed version, why, the release notes and the new VERSION.md, and stop before committing or publishing."
+  },
+  {
+    "skill": "plan-verify-fix",
+    "prompt": "Run /plan-verify-fix --coach on a throwaway Next.js repo prepared with /verify-setup, for a bug issue whose cause is a missing null check. Confirm the interview asks only for what's missing, research runs in parallel read-only subagents, the reproduction gate shows a failing test, each task is committed with evidence in PLAN.md, and the run ends with an independent review and a three-line retro. Don't push or open a PR."
+  },
+  {
+    "skill": "verify-setup",
+    "prompt": "Run /verify-setup in a throwaway Node + TypeScript repo with lint, test and build scripts but no typecheck script, a drizzle/ migrations folder and a .env.local. Confirm it asks before changing anything, adds a typecheck script, runs the verify command and reports its real output, installs both hooks (a .env edit is blocked, a normal edit isn't), adds the plan-reviewer agent and a CI workflow, and merges rather than overwrites an existing CLAUDE.md."
   }
 ]

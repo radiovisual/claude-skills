@@ -71,6 +71,18 @@ class CatalogTests(unittest.TestCase):
             len(Catalog(texts).entries), len(list((ROOT / "skills").glob("*/SKILL.md")))
         )
 
+    def test_user_only_skills_are_hidden_from_routing(self):
+        texts = {
+            **TEXTS,
+            "skills/manual/SKILL.md": "---\nname: manual\ndescription: Run by hand.\ndisable-model-invocation: true\n---\nSteps.\n",
+        }
+        catalog = Catalog(texts)
+        self.assertNotIn("manual", catalog.discovery())
+        self.assertIn("error", catalog.invoke("read_skill", {"skill": "manual"}))
+        self.assertIn(
+            "content", catalog.invoke("read_skill", {"skill": "manual"}, explicit=True)
+        )
+
     def test_reference_access_and_ranges(self):
         catalog = Catalog(TEXTS)
         self.assertIn(

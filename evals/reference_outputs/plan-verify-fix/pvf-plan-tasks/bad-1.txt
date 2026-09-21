@@ -1,0 +1,21 @@
+{
+  "mode": "resume",
+  "next_action": "plan",
+  "gate": "approve_plan",
+  "subagents": [],
+  "tasks": [
+    {
+      "title": "Implement dark mode",
+      "files": [
+        "app/layout.tsx",
+        "components/ThemeToggle.tsx",
+        "lib/theme.ts"
+      ],
+      "out_of_scope": "",
+      "check": "npm run verify"
+    }
+  ],
+  "verified": null,
+  "recovery": "none",
+  "message": "Next step."
+}

@@ -1,0 +1,10 @@
+{
+  "mode": "resume",
+  "next_action": "commit",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": false,
+  "recovery": "none",
+  "message": "No evidence recorded for task 2; running npm run verify."
+}

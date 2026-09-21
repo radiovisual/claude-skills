@@ -1,0 +1,10 @@
+{
+  "mode": "resume",
+  "next_action": "implement",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "new_migration",
+  "message": "Reset the local database with db:reset, then add 0008 changing owner_id to UUID. /rewind wouldn't undo the database."
+}

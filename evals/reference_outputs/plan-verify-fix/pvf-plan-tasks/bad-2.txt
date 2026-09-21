@@ -1,0 +1,27 @@
+{
+  "mode": "resume",
+  "next_action": "plan",
+  "gate": "approve_plan",
+  "subagents": [],
+  "tasks": [
+    {
+      "title": "Theme cookie helpers",
+      "files": [
+        "lib/theme.ts"
+      ],
+      "out_of_scope": "",
+      "check": "npx vitest run lib/theme.test.ts"
+    },
+    {
+      "title": "Polish the theme",
+      "files": [
+        "app/globals.css"
+      ],
+      "out_of_scope": "",
+      "check": ""
+    }
+  ],
+  "verified": null,
+  "recovery": "none",
+  "message": "Next step."
+}

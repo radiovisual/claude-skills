@@ -1,0 +1,26 @@
+{
+  "mode": "resume",
+  "next_action": "research",
+  "gate": "none",
+  "subagents": [
+    {
+      "type": "general-purpose",
+      "question": "How does Better Auth expose the current user in Next.js server components?",
+      "read_only": true
+    },
+    {
+      "type": "Explore",
+      "question": "How are channels and videos modelled in lib/db/schema.ts and queried in app/channel/? Answer with file:line.",
+      "read_only": true
+    },
+    {
+      "type": "Explore",
+      "question": "Which pagination pattern do app/page.tsx and lib/feed.ts use? Answer with file:line.",
+      "read_only": true
+    }
+  ],
+  "tasks": [],
+  "verified": null,
+  "recovery": "none",
+  "message": "Next step."
+}

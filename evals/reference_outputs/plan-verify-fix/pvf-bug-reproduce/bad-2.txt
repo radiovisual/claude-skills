@@ -1,0 +1,10 @@
+{
+  "mode": "bug",
+  "next_action": "reproduce",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "none",
+  "message": "I'll write a failing test showing the session is lost after reload, then ask you to confirm it matches #142."
+}

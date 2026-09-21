@@ -1,0 +1,2 @@
+- 2026-09-21 Task 2: upload e2e fails "413 Payload Too Large"; raised bodySizeLimit in next.config.js. Still 413.
+- 2026-09-21 Task 2: added a custom route handler config for the upload route. Still 413.

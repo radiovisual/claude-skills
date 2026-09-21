@@ -1,0 +1,19 @@
+{
+  "mode": "small",
+  "next_action": "implement",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [
+    {
+      "title": "Rename home page title",
+      "files": [
+        "app/page.tsx"
+      ],
+      "out_of_scope": "",
+      "check": ""
+    }
+  ],
+  "verified": null,
+  "recovery": "none",
+  "message": "Next step."
+}

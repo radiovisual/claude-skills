@@ -1,0 +1,696 @@
+[
+  {
+    "id": "pvf-small-change",
+    "skill": "plan-verify-fix",
+    "category": "sizing",
+    "group": "plan-verify-fix/pvf-small-change",
+    "split": "development",
+    "prompt": "/plan-verify-fix Change the home page title from 'Home' to 'MewTube'. You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-small-change/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-small-change/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-small-change/bad-1.txt",
+        "fails": [
+          "mode",
+          "one-task"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-small-change/bad-2.txt",
+        "fails": [
+          "task-has-check"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "mode",
+        "op": "equals",
+        "path": [
+          "mode"
+        ],
+        "value": "small",
+        "description": "mode is small"
+      },
+      {
+        "id": "one-task",
+        "op": "length",
+        "path": [
+          "tasks"
+        ],
+        "min": 1,
+        "max": 1,
+        "description": "A small change is a single task"
+      },
+      {
+        "id": "task-has-check",
+        "op": "all",
+        "path": [
+          "tasks"
+        ],
+        "checks": [
+          {
+            "id": "check",
+            "op": "length",
+            "path": [
+              "check"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "Even a small task names its check"
+      }
+    ]
+  },
+  {
+    "id": "pvf-feature-interview",
+    "skill": "plan-verify-fix",
+    "category": "sizing",
+    "group": "plan-verify-fix/pvf-feature-interview",
+    "split": "development",
+    "prompt": "/plan-verify-fix Add subscriptions: users can subscribe to channels and see a subscriptions feed. You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-feature-interview/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-feature-interview/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-feature-interview/bad-1.txt",
+        "fails": [
+          "interview-first"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-feature-interview/bad-2.txt",
+        "fails": [
+          "mode",
+          "interview-first"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "mode",
+        "op": "equals",
+        "path": [
+          "mode"
+        ],
+        "value": "feature",
+        "description": "mode is feature"
+      },
+      {
+        "id": "interview-first",
+        "op": "equals",
+        "path": [
+          "next_action"
+        ],
+        "value": "interview",
+        "description": "Interviews before researching or building"
+      }
+    ]
+  },
+  {
+    "id": "pvf-research-fanout",
+    "skill": "plan-verify-fix",
+    "category": "subagents",
+    "group": "plan-verify-fix/pvf-research-fanout",
+    "split": "development",
+    "prompt": "/plan-verify-fix resume subscriptions You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-research-fanout/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-research-fanout/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-research-fanout/bad-1.txt",
+        "fails": [
+          "parallel-agents",
+          "explore-for-code"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-research-fanout/bad-2.txt",
+        "fails": [
+          "read-only"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "research",
+        "op": "equals",
+        "path": [
+          "next_action"
+        ],
+        "value": "research",
+        "description": "Researches the open questions next"
+      },
+      {
+        "id": "parallel-agents",
+        "op": "length",
+        "path": [
+          "subagents"
+        ],
+        "min": 2,
+        "max": 4,
+        "description": "Two to four independent subagents"
+      },
+      {
+        "id": "read-only",
+        "op": "all",
+        "path": [
+          "subagents"
+        ],
+        "checks": [
+          {
+            "id": "ro",
+            "op": "equals",
+            "path": [
+              "read_only"
+            ],
+            "value": true
+          }
+        ],
+        "description": "Research subagents don't edit files"
+      },
+      {
+        "id": "explore-for-code",
+        "op": "any",
+        "path": [
+          "subagents"
+        ],
+        "checks": [
+          {
+            "id": "t",
+            "op": "equals",
+            "path": [
+              "type"
+            ],
+            "value": "Explore"
+          }
+        ],
+        "description": "Uses the read-only Explore type for codebase questions"
+      }
+    ]
+  },
+  {
+    "id": "pvf-plan-tasks",
+    "skill": "plan-verify-fix",
+    "category": "planning",
+    "group": "plan-verify-fix/pvf-plan-tasks",
+    "split": "development",
+    "prompt": "/plan-verify-fix resume dark-mode You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-plan-tasks/SPEC.md",
+      "fixtures/plan-verify-fix/pvf-plan-tasks/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-plan-tasks/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-plan-tasks/bad-1.txt",
+        "fails": [
+          "several-tasks"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-plan-tasks/bad-2.txt",
+        "fails": [
+          "every-task-checked"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "planning",
+        "op": "equals",
+        "path": [
+          "next_action"
+        ],
+        "value": "plan",
+        "description": "Writes the plan next"
+      },
+      {
+        "id": "plan-gate",
+        "op": "equals",
+        "path": [
+          "gate"
+        ],
+        "value": "approve_plan",
+        "description": "Stops for plan approval"
+      },
+      {
+        "id": "several-tasks",
+        "op": "length",
+        "path": [
+          "tasks"
+        ],
+        "min": 2,
+        "description": "Split into several one-commit tasks"
+      },
+      {
+        "id": "every-task-checked",
+        "op": "all",
+        "path": [
+          "tasks"
+        ],
+        "checks": [
+          {
+            "id": "check",
+            "op": "length",
+            "path": [
+              "check"
+            ],
+            "min": 1
+          },
+          {
+            "id": "files",
+            "op": "length",
+            "path": [
+              "files"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "Every task names its files and its check"
+      }
+    ]
+  },
+  {
+    "id": "pvf-bug-reproduce",
+    "skill": "plan-verify-fix",
+    "category": "bugs",
+    "group": "plan-verify-fix/pvf-bug-reproduce",
+    "split": "development",
+    "prompt": "/plan-verify-fix https://github.com/acme/mewtube/issues/142 You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-bug-reproduce/issue-142.md",
+      "fixtures/plan-verify-fix/pvf-bug-reproduce/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-bug-reproduce/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-bug-reproduce/bad-1.txt",
+        "fails": [
+          "reproduce-first",
+          "repro-gate"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-bug-reproduce/bad-2.txt",
+        "fails": [
+          "repro-gate"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "mode",
+        "op": "equals",
+        "path": [
+          "mode"
+        ],
+        "value": "bug",
+        "description": "mode is bug"
+      },
+      {
+        "id": "reproduce-first",
+        "op": "equals",
+        "path": [
+          "next_action"
+        ],
+        "value": "reproduce",
+        "description": "Reproduces with a failing check before fixing"
+      },
+      {
+        "id": "repro-gate",
+        "op": "equals",
+        "path": [
+          "gate"
+        ],
+        "value": "confirm_reproduction",
+        "description": "Asks the user to confirm the reproduction matches the bug"
+      }
+    ]
+  },
+  {
+    "id": "pvf-evidence-missing",
+    "skill": "plan-verify-fix",
+    "category": "verification",
+    "group": "plan-verify-fix/pvf-evidence-missing",
+    "split": "development",
+    "prompt": "/plan-verify-fix resume dark-mode (picking up task 2) You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-evidence-missing/PLAN.md",
+      "fixtures/plan-verify-fix/pvf-evidence-missing/last-turn.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-evidence-missing/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-evidence-missing/bad-1.txt",
+        "fails": [
+          "not-verified",
+          "run-check"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-evidence-missing/bad-2.txt",
+        "fails": [
+          "run-check"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "not-verified",
+        "op": "equals",
+        "path": [
+          "verified"
+        ],
+        "value": false,
+        "description": "A claim without command output doesn't count as verified"
+      },
+      {
+        "id": "run-check",
+        "op": "equals",
+        "path": [
+          "next_action"
+        ],
+        "value": "run_verify",
+        "description": "Runs the check to get evidence"
+      }
+    ]
+  },
+  {
+    "id": "pvf-evidence-present",
+    "skill": "plan-verify-fix",
+    "category": "verification",
+    "group": "plan-verify-fix/pvf-evidence-present",
+    "split": "holdout",
+    "prompt": "/plan-verify-fix resume dark-mode --quiet You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-evidence-present/PLAN.md",
+      "fixtures/plan-verify-fix/pvf-evidence-present/last-output.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-evidence-present/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-evidence-present/bad-1.txt",
+        "fails": [
+          "verified",
+          "commit"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-evidence-present/bad-2.txt",
+        "fails": [
+          "commit"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "verified",
+        "op": "equals",
+        "path": [
+          "verified"
+        ],
+        "value": true,
+        "description": "Output shows both checks passing"
+      },
+      {
+        "id": "commit",
+        "op": "equals",
+        "path": [
+          "next_action"
+        ],
+        "value": "commit",
+        "description": "Commits the verified task"
+      }
+    ]
+  },
+  {
+    "id": "pvf-fix-forward",
+    "skill": "plan-verify-fix",
+    "category": "recovery",
+    "group": "plan-verify-fix/pvf-fix-forward",
+    "split": "development",
+    "prompt": "/plan-verify-fix resume related-videos You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-fix-forward/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-fix-forward/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-fix-forward/bad-1.txt",
+        "fails": [
+          "fix-forward",
+          "test-first"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-fix-forward/bad-2.txt",
+        "fails": [
+          "test-first"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-forward",
+        "op": "equals",
+        "path": [
+          "recovery"
+        ],
+        "value": "fix_forward",
+        "description": "Right approach with a bug: fix forward"
+      },
+      {
+        "id": "test-first",
+        "op": "equals",
+        "path": [
+          "next_action"
+        ],
+        "value": "write_failing_test",
+        "description": "Starts from a failing test"
+      }
+    ]
+  },
+  {
+    "id": "pvf-roll-back",
+    "skill": "plan-verify-fix",
+    "category": "recovery",
+    "group": "plan-verify-fix/pvf-roll-back",
+    "split": "holdout",
+    "prompt": "/plan-verify-fix resume search You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-roll-back/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-roll-back/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-roll-back/bad-1.txt",
+        "fails": [
+          "roll-back",
+          "ask"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-roll-back/bad-2.txt",
+        "fails": [
+          "ask"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "roll-back",
+        "op": "equals",
+        "path": [
+          "recovery"
+        ],
+        "value": "roll_back",
+        "description": "Wrong approach: roll back"
+      },
+      {
+        "id": "ask",
+        "op": "equals",
+        "path": [
+          "gate"
+        ],
+        "value": "ask_user",
+        "description": "Asks before continuing on a new approach"
+      }
+    ]
+  },
+  {
+    "id": "pvf-two-strikes",
+    "skill": "plan-verify-fix",
+    "category": "recovery",
+    "group": "plan-verify-fix/pvf-two-strikes",
+    "split": "development",
+    "prompt": "/plan-verify-fix resume uploads You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-two-strikes/LOG.md",
+      "fixtures/plan-verify-fix/pvf-two-strikes/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-two-strikes/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-two-strikes/bad-1.txt",
+        "fails": [
+          "two-strikes",
+          "ask"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-two-strikes/bad-2.txt",
+        "fails": [
+          "ask"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "two-strikes",
+        "op": "equals",
+        "path": [
+          "recovery"
+        ],
+        "value": "two_strikes",
+        "description": "Same failure after two fixes: stop"
+      },
+      {
+        "id": "ask",
+        "op": "equals",
+        "path": [
+          "gate"
+        ],
+        "value": "ask_user",
+        "description": "Stops and asks instead of a third guess"
+      }
+    ]
+  },
+  {
+    "id": "pvf-bad-migration",
+    "skill": "plan-verify-fix",
+    "category": "recovery",
+    "group": "plan-verify-fix/pvf-bad-migration",
+    "split": "holdout",
+    "prompt": "/plan-verify-fix resume channels You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-bad-migration/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-bad-migration/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-bad-migration/bad-1.txt",
+        "fails": [
+          "new-migration"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-bad-migration/bad-2.txt",
+        "fails": [
+          "new-migration"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "new-migration",
+        "op": "equals",
+        "path": [
+          "recovery"
+        ],
+        "value": "new_migration",
+        "description": "Never edit an applied migration; reset and add a new one"
+      }
+    ]
+  },
+  {
+    "id": "pvf-visual-gate",
+    "skill": "plan-verify-fix",
+    "category": "verification",
+    "group": "plan-verify-fix/pvf-visual-gate",
+    "split": "development",
+    "prompt": "/plan-verify-fix resume watch-page You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-visual-gate/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-visual-gate/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-visual-gate/bad-1.txt",
+        "fails": [
+          "visual-gate",
+          "not-yet"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-visual-gate/bad-2.txt",
+        "fails": [
+          "not-yet"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "visual-gate",
+        "op": "equals",
+        "path": [
+          "gate"
+        ],
+        "value": "visual_check",
+        "description": "Asks a human to compare with the mockup"
+      },
+      {
+        "id": "not-yet",
+        "op": "equals",
+        "path": [
+          "verified"
+        ],
+        "value": false,
+        "description": "Not verified until the visual check is done"
+      }
+    ]
+  }
+]

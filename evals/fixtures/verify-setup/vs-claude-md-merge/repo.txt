@@ -1,0 +1,9 @@
+package.json:
+{
+  "scripts": {"dev": "next dev", "build": "next build", "lint": "next lint", "test": "vitest run", "e2e": "playwright test"},
+  "devDependencies": {"typescript": "5.9.3", "vitest": "3.2.4", "@playwright/test": "1.56.1", "eslint": "9.36.0"}
+}
+tsconfig.json: present
+Files: app/, lib/, e2e/, .env.local, .env.example
+No .claude/ folder. No .github/workflows/.
+Notes from README: `npm run build` takes about 3 minutes; e2e takes about 5 minutes.

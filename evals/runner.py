@@ -33,7 +33,7 @@ def run_trial(client, texts, prompt, max_turns=8, preload=None):
         instruction += "\nAvailable skills:\n" + catalog.discovery()
     preloaded = []
     if preload:
-        resource = catalog.invoke("read_skill", {"skill": preload})
+        resource = catalog.invoke("read_skill", {"skill": preload}, explicit=True)
         if "error" in resource:
             return {
                 "status": "error",

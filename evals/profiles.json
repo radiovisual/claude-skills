@@ -27,7 +27,9 @@
       "commit-docs-untracked",
       "pr-default-body",
       "fix-scope-security-only",
-      "release-feature-minor"
+      "release-feature-minor",
+      "pvf-bug-reproduce",
+      "vs-node-verify"
     ]
   }
 }

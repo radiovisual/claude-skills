@@ -44,6 +44,9 @@ class Catalog:
     def __init__(self, texts):
         self.texts = texts
         self.entries = {}
+        # Skills with disable-model-invocation are run only by the user (e.g. /name), so
+        # they are hidden from automatic routing but can still be supplied for task trials.
+        self.user_only = set()
         self.loaded = set()
         self.reads = []
         for path, text in sorted(texts.items()):
@@ -57,17 +60,25 @@ class Catalog:
             ):
                 raise ValueError(f"Invalid skill metadata: {path}")
             self.entries[parts[1]] = meta["description"]
+            if meta.get("disable-model-invocation") is True:
+                self.user_only.add(parts[1])
 
     def discovery(self):
         return json.dumps(
-            [{"name": k, "description": v} for k, v in self.entries.items()]
+            [
+                {"name": k, "description": v}
+                for k, v in self.entries.items()
+                if k not in self.user_only
+            ]
         )
 
-    def invoke(self, name, args):
+    def invoke(self, name, args, explicit=False):
         if not isinstance(args, dict):
             return {"error": "Arguments must be an object"}
         skill = args.get("skill")
         if not isinstance(skill, str) or skill not in self.entries:
+            return {"error": "Unknown skill"}
+        if skill in self.user_only and not explicit and skill not in self.loaded:
             return {"error": "Unknown skill"}
         if name == "read_skill":
             path = f"skills/{skill}/SKILL.md"

@@ -1,0 +1,10 @@
+{
+  "mode": "resume",
+  "next_action": "implement",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "fix_forward",
+  "message": "The approach is right; the existing test already fails, so fix the query to exclude the source video and rerun."
+}

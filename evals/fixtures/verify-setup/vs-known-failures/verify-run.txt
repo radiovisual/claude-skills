@@ -1,0 +1,5 @@
+$ npm run lint && npx tsc --noEmit && npm test
+lint: no problems
+lib/feed.ts(31,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+lib/upload.ts(12,19): error TS7006: Parameter 'file' implicitly has an 'any' type.
+Found 2 errors.

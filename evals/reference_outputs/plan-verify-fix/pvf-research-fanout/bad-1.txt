@@ -1,0 +1,16 @@
+{
+  "mode": "resume",
+  "next_action": "research",
+  "gate": "none",
+  "subagents": [
+    {
+      "type": "general-purpose",
+      "question": "Research everything about subscriptions.",
+      "read_only": true
+    }
+  ],
+  "tasks": [],
+  "verified": null,
+  "recovery": "none",
+  "message": "Next step."
+}

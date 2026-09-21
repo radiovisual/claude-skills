@@ -1,0 +1,30 @@
+{
+  "verify_command": "cd frontend && npm run lint && npm run typecheck && npm test && npm run build",
+  "fast_check": "(cd frontend && npm run lint && npm run typecheck && npm test) && (cd backend && go test ./...)",
+  "add_scripts": {},
+  "missing_tools": [],
+  "known_failures": [],
+  "claude_md_action": "create",
+  "allow": [
+    "Bash(npm run lint *)",
+    "Bash(npm run typecheck *)",
+    "Bash(npm test *)",
+    "Bash(npm run build *)",
+    "Bash(npm run verify *)",
+    "Bash(git status *)",
+    "Bash(git diff *)",
+    "Bash(git log *)",
+    "Bash(git add *)",
+    "Bash(git commit *)"
+  ],
+  "stop_hook_check": "(cd frontend && npm run lint && npm run typecheck && npm test) && (cd backend && go test ./...)",
+  "migration_dirs": [],
+  "ci_action": "create",
+  "reviewer_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Bash"
+  ],
+  "questions": []
+}

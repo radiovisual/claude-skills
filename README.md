@@ -20,9 +20,11 @@ CI checks all of it on every push and pull request.
 | [piv-commit](skills/piv-commit/SKILL.md) | Commits all uncommitted changes (tracked and untracked) as one atomic commit with a conventional `<tag>: <description>` message, then prints a What Changed summary and lists any changed `.claude/` files. Follows the `## commit` section of `.claude/references/conventions.md` when the project has one. |
 | [piv-create-pr](skills/piv-create-pr/SKILL.md) | Pushes a committed feature branch and opens a GitHub pull request with `gh`. Detects the base branch, stops on the base branch, with uncommitted changes, with nothing to merge, or when a PR already exists, and writes a body with summary, changes, validation, reviewer notes and linked tickets. Follows the `## pr` section of `.claude/references/conventions.md`. |
 | [piv-fix-review-findings](skills/piv-fix-review-findings/SKILL.md) | Works through code-review findings from a person or an AI. Sorts each into fix now, defer (logged as an issue), needs a human look, or noise; asks when the scope is unclear; fixes one at a time with a test; validates; and commits and pushes when the work is on a PR. |
+| [plan-verify-fix](skills/plan-verify-fix/SKILL.md) | **Run it yourself: `/plan-verify-fix`.** Takes a feature request or a bug issue through the Plan → Verify → Fix loop: interviews you, researches with parallel read-only subagents, writes `SPEC.md` and a `PLAN.md` of one-commit tasks that each name their check, then builds, verifies and commits each task on its own. Stops for your approval at the spec, the plan, the bug reproduction, visual checks and the final review. Coaches the habits as it goes (`--coach` for more, `--quiet` for none). |
 | [semver-release](skills/semver-release/SKILL.md) | Cuts a Semantic Versioning release of a GitHub repository. Finds the current version from git tags, reads the commits since the last release, picks the major, minor or patch bump (with the 0.x rule for breaking changes), writes grouped release notes, updates `VERSION.md` with the version and a link to the notes, and publishes the tag and GitHub release after you confirm. |
 | [slack-block-kit](skills/slack-block-kit/SKILL.md) | Builds or debugs Slack Block Kit payloads for messages, modals, App Home, streaming responses and Work Object unfurls: block and element limits, surfaces, and interaction schemas. Not for plain text formatting. |
 | [slack-mrkdwn](skills/slack-mrkdwn/SKILL.md) | Formats or debugs Slack message text: mrkdwn vs. standard Markdown vs. `rich_text` vs. `plain_text`, mentions, links, dates and escaping. Not for Block Kit layout. |
+| [verify-setup](skills/verify-setup/SKILL.md) | **Run it yourself: `/verify-setup`.** Makes a repository ready for agent work: one verify command, CLAUDE.md commands and workflow rules, pre-approved safe commands, a Stop hook that blocks finishing on failing checks, a hook that blocks edits to `.env` files and committed migrations, a read-only plan-reviewer subagent, and CI. Asks before changing anything. |
 
 ### Installing skills
 
@@ -95,6 +97,10 @@ was installed. Update with `npx skills update` and uninstall with
 
 ### Using a skill
 
+Two skills only run when you type them, because they take over a whole piece of work:
+`/verify-setup` (once per project) and `/plan-verify-fix` (per feature or bug).
+The rest load on their own when a request matches them.
+
 You don't need to invoke a skill yourself. The agent sees each skill's `name`
 and `description` and loads the skill when a request matches it. For example,
 "why does this Slack message show `*bold*` literally?" loads `slack-mrkdwn`.
@@ -105,6 +111,27 @@ The descriptions also say what each skill is *not* for, so it stays out of
 unrelated work. Asking for a JavaScript `Array.slice` explanation should not
 load `feature-slicing`, for example. The routing cases in
 [`evals/routing.json`](evals/routing.json) record these expectations.
+
+### The Plan → Verify → Fix workflow
+
+The workflow skills chain together. Each one is also useful on its own.
+
+1. **`/verify-setup`**, once per project, so every change can be proven with one
+   command and hooks keep agents from skipping it.
+2. **`/plan-verify-fix <request or issue>`** for each feature or bug:
+   - It interviews you, then sends read-only subagents to research in parallel.
+   - It writes `docs/work/<slug>/SPEC.md` and waits for your approval.
+   - It writes a `PLAN.md` of small tasks, each with the check that proves it, and waits again.
+   - Then it builds each task on its own: test first, verify, paste the evidence, commit with `piv-commit`.
+   - For bugs, it first shows you a failing test that reproduces the problem.
+   - After `/clear`, `/plan-verify-fix resume <slug>` picks up from the files.
+3. **Review and ship**: an independent review (`/code-review` or the plan-reviewer
+   subagent), findings handled with `piv-fix-review-findings`, a pull request
+   with `piv-create-pr`, and releases with `semver-release`.
+
+Whenever it waits for you, it says why that step matters. That's how the
+habits stick: small verifiable tasks, evidence over "it works", fixing root
+causes, and rolling back instead of patching a wrong approach.
 
 ## Repository layout
 
@@ -130,7 +157,7 @@ described last.
 
 | Check | What it verifies | Needs |
 |---|---|---|
-| `scripts/validate_skills.py` | Frontmatter is valid; `name` matches the folder; each description is one line of at most 1024 characters; every reference file is linked from its `SKILL.md` and no link points outside the skill; each skill has `direct`, `indirect`, `negative`, `incomplete` and `boundary` routing cases and one workflow case | Python 3.10+, PyYAML |
+| `scripts/validate_skills.py` | Frontmatter is valid; `name` matches the folder; each description is one line of at most 1024 characters; every reference file is linked from its `SKILL.md` and no link points outside the skill; each skill has one workflow case, and each skill that loads automatically has `direct`, `indirect`, `negative`, `incomplete` and `boundary` routing cases | Python 3.10+, PyYAML |
 | `python3 -m evals.validation` | Task inventory: unique IDs and prompts, valid fixture and assertion paths, at least 1 reference answer and 2 counterexamples per task, development/holdout splits that don't leak, and at least one task for every skill | Python, PyYAML, git |
 | `python3 -m unittest evals.test_evals evals.test_contracts` | The harness itself: no answer leakage into prompts, trial isolation, correct reporting of blocked or failed runs | Python, PyYAML, git |
 | `python3 -m evals.calibrate` | Every grader accepts every known-good answer and rejects every known-bad one for the reason it declares | Docker |
@@ -234,7 +261,10 @@ CI rejects a skill that has no eval coverage. For `skills/my-skill/`:
 2. **`evals/routing.json`**: add cases with `"owner": "my-skill"` covering at
    least the kinds `direct`, `indirect`, `negative`, `incomplete` and
    `boundary`. Each case needs a unique `id`, a `prompt`, `expected_skills`, a
-   `rationale`, a `split` (`development` or `holdout`) and a `group`.
+   `rationale`, a `split` (`development` or `holdout`) and a `group`. Skip this
+   step for a skill with `disable-model-invocation: true`: it only runs when a
+   user types it, so it never appears in routing, and no routing case may
+   expect it.
 3. **`evals/workflows.json`**: add one `{ "skill": "my-skill", "prompt": ... }`.
 4. **`evals/tasks/my-skill.json`**: add at least one task. Put its inputs in
    `evals/fixtures/my-skill/`. Give it at least one good answer and two bad

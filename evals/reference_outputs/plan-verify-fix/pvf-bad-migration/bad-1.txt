@@ -1,0 +1,10 @@
+{
+  "mode": "resume",
+  "next_action": "implement",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "roll_back",
+  "message": "Edit 0007 to use UUID and re-run."
+}

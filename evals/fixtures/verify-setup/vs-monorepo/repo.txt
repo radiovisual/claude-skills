@@ -1,0 +1,4 @@
+Root has no package.json.
+frontend/package.json scripts: {"lint": "eslint .", "typecheck": "tsc --noEmit", "test": "vitest run", "build": "vite build"}
+backend/go.mod (module example.com/api), backend/Makefile targets: lint (golangci-lint run), test (go test ./...)
+No CLAUDE.md, no .github/workflows/.

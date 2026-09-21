@@ -1,0 +1,10 @@
+{
+  "mode": "resume",
+  "next_action": "ask_user",
+  "gate": "visual_check",
+  "subagents": [],
+  "tasks": [],
+  "verified": false,
+  "recovery": "none",
+  "message": "Verify passes. I can't take screenshots here: please open /watch/1 and compare it with design/watch.png."
+}

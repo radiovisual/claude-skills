@@ -1,0 +1,10 @@
+{
+  "mode": "resume",
+  "next_action": "run_verify",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": false,
+  "recovery": "none",
+  "message": "Task 1 verified; pasting the output into PLAN.md and committing."
+}

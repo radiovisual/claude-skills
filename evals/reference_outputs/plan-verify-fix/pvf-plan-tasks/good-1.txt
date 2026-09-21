@@ -1,0 +1,45 @@
+{
+  "mode": "resume",
+  "next_action": "plan",
+  "gate": "approve_plan",
+  "subagents": [],
+  "tasks": [
+    {
+      "title": "Read and write the theme cookie",
+      "files": [
+        "lib/theme.ts",
+        "lib/theme.test.ts"
+      ],
+      "out_of_scope": "UI",
+      "check": "npx vitest run lib/theme.test.ts"
+    },
+    {
+      "title": "Apply the theme on the server in the root layout",
+      "files": [
+        "app/layout.tsx"
+      ],
+      "out_of_scope": "Toggle UI",
+      "check": "npm run verify"
+    },
+    {
+      "title": "Theme toggle button",
+      "files": [
+        "components/ThemeToggle.tsx",
+        "app/layout.tsx"
+      ],
+      "out_of_scope": "System theme detection",
+      "check": "npm run verify, and a screenshot of both themes"
+    },
+    {
+      "title": "End-to-end persistence test",
+      "files": [
+        "e2e/theme.spec.ts"
+      ],
+      "out_of_scope": "",
+      "check": "npx playwright test e2e/theme.spec.ts"
+    }
+  ],
+  "verified": null,
+  "recovery": "none",
+  "message": "Next step."
+}

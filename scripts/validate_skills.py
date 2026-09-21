@@ -43,7 +43,7 @@ def validate(root):
     root = root.resolve()
     errors = []
     entries = sorted((root / "skills").glob("*/SKILL.md"))
-    names = set()
+    names, user_only = set(), set()
     if not entries:
         return ["No skills found"], []
     for entry in entries:
@@ -67,6 +67,8 @@ def validate(root):
             errors.append(f"{label}: name must match directory and be unique")
         else:
             names.add(name)
+            if meta.get("disable-model-invocation") is True:
+                user_only.add(name)
         if not isinstance(description, str) or not description.strip() or len(description) > 1024 or "\n" in description:
             errors.append(f"{label}: description must be a nonempty single line, at most 1024 characters")
         if not match.group(2).strip():
@@ -111,16 +113,20 @@ def validate(root):
         cases = json.loads(cases_file.read_text())
         if not isinstance(cases, list):
             raise ValueError("expected an array")
-        ids, coverage = set(), {name: set() for name in names}
+        # Skills with disable-model-invocation only run when the user invokes them, so
+        # automatic routing cases don't apply to them.
+        ids, coverage = set(), {name: set() for name in names - user_only}
         for case in cases:
             if not isinstance(case, dict) or not isinstance(case.get("id"), str) or case["id"] in ids:
                 raise ValueError("cases need unique string IDs")
             ids.add(case["id"])
-            if case.get("owner") not in names or not isinstance(case.get("prompt"), str) or not case["prompt"].strip():
+            if case.get("owner") not in coverage or not isinstance(case.get("prompt"), str) or not case["prompt"].strip():
                 raise ValueError(f"invalid owner/prompt in {case['id']}")
             expected = case.get("expected_skills")
             if not isinstance(expected, list) or any(not isinstance(n, str) or n not in names for n in expected):
                 raise ValueError(f"invalid expected skills in {case['id']}")
+            if set(expected) & user_only:
+                raise ValueError(f"{case['id']} expects a skill with disable-model-invocation, which never loads automatically")
             kind = case.get("kind")
             if kind not in {"direct", "indirect", "negative", "incomplete", "boundary", "near-miss", "mixed"}:
                 raise ValueError(f"invalid kind in {case['id']}")

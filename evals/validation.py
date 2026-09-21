@@ -62,7 +62,8 @@ def expected_assertions(case):
 
 def validate(root):
     _, texts = snapshot(root)
-    skills = Catalog(texts).entries
+    catalog = Catalog(texts)
+    skills = catalog.entries
     tasks = load_tasks(root)
     if not tasks:
         raise ValueError("Task inventory must be nonempty")
@@ -177,6 +178,7 @@ def validate(root):
             or not isinstance(expected, list)
             or len(expected) != len(set(expected))
             or set(expected) - set(skills)
+            or set(expected) & catalog.user_only
         ):
             raise ValueError(f"Invalid routing selection: {c['id']}")
         if not c.get("rationale"):

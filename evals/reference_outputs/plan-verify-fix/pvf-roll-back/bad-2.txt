@@ -1,0 +1,10 @@
+{
+  "mode": "resume",
+  "next_action": "roll_back",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "roll_back",
+  "message": "Wrong approach. Rolling back to b2c3d4e and re-planning task 4 as a server-side pgvector query; OK?"
+}

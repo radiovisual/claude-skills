@@ -1,0 +1,10 @@
+{
+  "mode": "resume",
+  "next_action": "roll_back",
+  "gate": "none",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "roll_back",
+  "message": "The approach is right; the existing test already fails, so fix the query to exclude the source video and rerun."
+}

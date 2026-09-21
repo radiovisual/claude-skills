@@ -1,0 +1,21 @@
+{
+  "mode": "resume",
+  "next_action": "research",
+  "gate": "none",
+  "subagents": [
+    {
+      "type": "general-purpose",
+      "question": "Add the subscriptions table.",
+      "read_only": false
+    },
+    {
+      "type": "Explore",
+      "question": "Find the feed pagination pattern.",
+      "read_only": true
+    }
+  ],
+  "tasks": [],
+  "verified": null,
+  "recovery": "none",
+  "message": "Next step."
+}

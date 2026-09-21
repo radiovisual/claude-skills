@@ -1,0 +1,25 @@
+{
+  "verify_command": "npm run lint && npm run typecheck && npm test && npm run build",
+  "fast_check": "npm run lint && npm run typecheck && npm test",
+  "add_scripts": {
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "missing_tools": [],
+  "known_failures": [],
+  "claude_md_action": "create",
+  "allow": [
+    "Bash(npm run verify *)",
+    "Bash(git *)"
+  ],
+  "stop_hook_check": "npm run lint && npm run typecheck && npm test",
+  "migration_dirs": [],
+  "ci_action": "create",
+  "reviewer_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Bash"
+  ],
+  "questions": []
+}

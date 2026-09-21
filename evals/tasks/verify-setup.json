@@ -1,0 +1,546 @@
+[
+  {
+    "id": "vs-node-verify",
+    "skill": "verify-setup",
+    "category": "verify-command",
+    "group": "verify-setup/vs-node-verify",
+    "split": "development",
+    "prompt": "/verify-setup You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-node-verify/repo.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-node-verify/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-node-verify/bad-1.txt",
+        "fails": [
+          "adds-typecheck"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-node-verify/bad-2.txt",
+        "fails": [
+          "no-e2e-in-verify"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "uses-existing",
+        "op": "contains_all",
+        "path": [
+          "verify_command"
+        ],
+        "value": [
+          "lint",
+          "test",
+          "build"
+        ],
+        "description": "Builds the verify command from existing scripts"
+      },
+      {
+        "id": "no-e2e-in-verify",
+        "op": "excludes",
+        "path": [
+          "verify_command"
+        ],
+        "value": [
+          "e2e",
+          "playwright"
+        ],
+        "description": "Keeps the slow e2e run separate"
+      },
+      {
+        "id": "adds-typecheck",
+        "op": "keys",
+        "path": [
+          "add_scripts"
+        ],
+        "value": [
+          "typecheck"
+        ],
+        "description": "Adds a typecheck script since TypeScript is installed"
+      }
+    ]
+  },
+  {
+    "id": "vs-python-subfolder",
+    "skill": "verify-setup",
+    "category": "verify-command",
+    "group": "verify-setup/vs-python-subfolder",
+    "split": "holdout",
+    "prompt": "/verify-setup for the API repo You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-python-subfolder/repo.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-python-subfolder/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-python-subfolder/bad-1.txt",
+        "fails": [
+          "runs-in-backend"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-python-subfolder/bad-2.txt",
+        "fails": [
+          "ci-update"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "runs-in-backend",
+        "op": "matches",
+        "path": [
+          "verify_command"
+        ],
+        "value": "(?s).*cd backend.*pytest.*",
+        "description": "Runs the checks from the folder with the config"
+      },
+      {
+        "id": "all-checks",
+        "op": "contains_all",
+        "path": [
+          "verify_command"
+        ],
+        "value": [
+          "ruff",
+          "mypy",
+          "pytest"
+        ],
+        "description": "Includes lint, type-check and tests"
+      },
+      {
+        "id": "ci-update",
+        "op": "equals",
+        "path": [
+          "ci_action"
+        ],
+        "value": "update",
+        "description": "Extends the existing workflow instead of adding another"
+      }
+    ]
+  },
+  {
+    "id": "vs-monorepo",
+    "skill": "verify-setup",
+    "category": "verify-command",
+    "group": "verify-setup/vs-monorepo",
+    "split": "development",
+    "prompt": "/verify-setup across frontend and backend You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-monorepo/repo.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-monorepo/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-monorepo/bad-1.txt",
+        "fails": [
+          "both-surfaces"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-monorepo/bad-2.txt",
+        "fails": [
+          "both-surfaces"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "both-surfaces",
+        "op": "contains_all",
+        "path": [
+          "verify_command"
+        ],
+        "value": [
+          "cd frontend",
+          "cd backend",
+          "go test"
+        ],
+        "description": "One command covers both surfaces"
+      }
+    ]
+  },
+  {
+    "id": "vs-no-test-runner",
+    "skill": "verify-setup",
+    "category": "gaps",
+    "group": "verify-setup/vs-no-test-runner",
+    "split": "development",
+    "prompt": "/verify-setup for this Vite app You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-no-test-runner/repo.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-no-test-runner/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-no-test-runner/bad-1.txt",
+        "fails": [
+          "no-invented-tests"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-no-test-runner/bad-2.txt",
+        "fails": [
+          "reports-gap",
+          "asks"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "no-invented-tests",
+        "op": "excludes",
+        "path": [
+          "verify_command"
+        ],
+        "value": [
+          "npm test",
+          "vitest",
+          "jest"
+        ],
+        "description": "Doesn't reference a test runner that isn't installed"
+      },
+      {
+        "id": "reports-gap",
+        "op": "length",
+        "path": [
+          "missing_tools"
+        ],
+        "min": 1,
+        "description": "Lists the missing test runner as a gap"
+      },
+      {
+        "id": "asks",
+        "op": "length",
+        "path": [
+          "questions"
+        ],
+        "min": 1,
+        "description": "Asks before installing anything"
+      }
+    ]
+  },
+  {
+    "id": "vs-claude-md-merge",
+    "skill": "verify-setup",
+    "category": "claude-md",
+    "group": "verify-setup/vs-claude-md-merge",
+    "split": "development",
+    "prompt": "/verify-setup (we already have a CLAUDE.md) You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-claude-md-merge/repo.txt",
+      "fixtures/verify-setup/vs-claude-md-merge/CLAUDE.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-claude-md-merge/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-claude-md-merge/bad-1.txt",
+        "fails": [
+          "merge"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-claude-md-merge/bad-2.txt",
+        "fails": [
+          "merge"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "merge",
+        "op": "equals",
+        "path": [
+          "claude_md_action"
+        ],
+        "value": "merge",
+        "description": "Merges into the existing CLAUDE.md instead of replacing it"
+      }
+    ]
+  },
+  {
+    "id": "vs-permissions",
+    "skill": "verify-setup",
+    "category": "permissions",
+    "group": "verify-setup/vs-permissions",
+    "split": "development",
+    "prompt": "/verify-setup, and pre-approve the safe commands You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-permissions/repo.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-permissions/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-permissions/bad-1.txt",
+        "fails": [
+          "git-commit-allowed",
+          "nothing-risky"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-permissions/bad-2.txt",
+        "fails": [
+          "nothing-risky"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "git-commit-allowed",
+        "op": "contains_all",
+        "path": [
+          "allow"
+        ],
+        "value": [
+          "Bash(git add *)",
+          "Bash(git commit *)"
+        ],
+        "description": "Pre-approves staging and committing"
+      },
+      {
+        "id": "nothing-risky",
+        "op": "excludes",
+        "path": [
+          "allow"
+        ],
+        "value": [
+          "Bash(git push *)",
+          "Bash(git *)",
+          "Bash(rm *)",
+          "Bash(*)"
+        ],
+        "description": "Doesn't pre-approve pushes, deletions or everything"
+      },
+      {
+        "id": "verify-allowed",
+        "op": "any",
+        "path": [
+          "allow"
+        ],
+        "checks": [
+          {
+            "id": "v",
+            "op": "matches",
+            "path": [],
+            "value": "Bash\\(npm (run verify|test|run lint)[^)]*\\)"
+          }
+        ],
+        "description": "Pre-approves the verify commands"
+      }
+    ]
+  },
+  {
+    "id": "vs-fast-stop-hook",
+    "skill": "verify-setup",
+    "category": "hooks",
+    "group": "verify-setup/vs-fast-stop-hook",
+    "split": "development",
+    "prompt": "/verify-setup including the Stop hook You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-fast-stop-hook/repo.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-fast-stop-hook/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-fast-stop-hook/bad-1.txt",
+        "fails": [
+          "fast-only"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-fast-stop-hook/bad-2.txt",
+        "fails": [
+          "fast-only"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fast-only",
+        "op": "excludes",
+        "path": [
+          "stop_hook_check"
+        ],
+        "value": [
+          "build",
+          "e2e",
+          "playwright"
+        ],
+        "description": "The Stop hook runs only the fast checks"
+      }
+    ]
+  },
+  {
+    "id": "vs-migration-dirs",
+    "skill": "verify-setup",
+    "category": "hooks",
+    "group": "verify-setup/vs-migration-dirs",
+    "split": "development",
+    "prompt": "/verify-setup; we use Drizzle and Supabase migrations You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-migration-dirs/repo.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-migration-dirs/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-migration-dirs/bad-1.txt",
+        "fails": [
+          "protects-migrations"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-migration-dirs/bad-2.txt",
+        "fails": [
+          "protects-migrations"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "protects-migrations",
+        "op": "set_equals",
+        "path": [
+          "migration_dirs"
+        ],
+        "value": [
+          "drizzle",
+          "supabase/migrations"
+        ],
+        "description": "Protects exactly the migration folders"
+      }
+    ]
+  },
+  {
+    "id": "vs-reviewer-read-only",
+    "skill": "verify-setup",
+    "category": "subagents",
+    "group": "verify-setup/vs-reviewer-read-only",
+    "split": "holdout",
+    "prompt": "/verify-setup with the plan-reviewer agent You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-reviewer-read-only/repo.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-reviewer-read-only/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-reviewer-read-only/bad-1.txt",
+        "fails": [
+          "reviewer-cant-edit"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-reviewer-read-only/bad-2.txt",
+        "fails": [
+          "reviewer-reads",
+          "reviewer-cant-edit"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "reviewer-reads",
+        "op": "contains",
+        "path": [
+          "reviewer_tools"
+        ],
+        "value": "Read",
+        "description": "The reviewer can read files"
+      },
+      {
+        "id": "reviewer-cant-edit",
+        "op": "excludes",
+        "path": [
+          "reviewer_tools"
+        ],
+        "value": [
+          "Edit",
+          "Write",
+          "MultiEdit",
+          "NotebookEdit"
+        ],
+        "description": "The reviewer can't edit files"
+      }
+    ]
+  },
+  {
+    "id": "vs-known-failures",
+    "skill": "verify-setup",
+    "category": "verify-command",
+    "group": "verify-setup/vs-known-failures",
+    "split": "holdout",
+    "prompt": "/verify-setup even though type-checking currently fails You are running /verify-setup. Don't edit files; propose the setup from the repository snapshot below. Return only JSON with \"verify_command\" (string or null), \"fast_check\" (string or null), \"add_scripts\" (object of script name to command you would add, using tools already installed), \"missing_tools\" (array), \"known_failures\" (array), \"claude_md_action\" (\"create\", \"merge\" or \"none\"), \"allow\" (permission rules, e.g. \"Bash(npm test *)\"), \"stop_hook_check\" (string or null), \"migration_dirs\" (array), \"ci_action\" (\"create\", \"update\" or \"none\"), \"reviewer_tools\" (array) and \"questions\" (array of questions for the user).",
+    "inputs": [
+      "fixtures/verify-setup/vs-known-failures/repo.txt",
+      "fixtures/verify-setup/vs-known-failures/verify-run.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/verify-setup/vs-known-failures/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/verify-setup/vs-known-failures/bad-1.txt",
+        "fails": [
+          "keeps-typecheck",
+          "reports-failures"
+        ]
+      },
+      {
+        "path": "reference_outputs/verify-setup/vs-known-failures/bad-2.txt",
+        "fails": [
+          "reports-failures"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "keeps-typecheck",
+        "op": "matches",
+        "path": [
+          "verify_command"
+        ],
+        "value": "(?s).*(typecheck|tsc).*",
+        "description": "Keeps the failing type-check in the verify command"
+      },
+      {
+        "id": "reports-failures",
+        "op": "length",
+        "path": [
+          "known_failures"
+        ],
+        "min": 1,
+        "description": "Reports the existing failures to the user"
+      }
+    ]
+  }
+]
