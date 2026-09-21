@@ -18,6 +18,8 @@ CI checks all of it on every push and pull request.
 | [mermaid-diagrams](skills/mermaid-diagrams/SKILL.md) | Creates or fixes Mermaid diagrams in Markdown: flowcharts, sequence, ER, class, state, Gantt and architecture diagrams, including reserved-word and syntax pitfalls. Only when Mermaid is the output format. |
 | [modern-css](skills/modern-css/SKILL.md) | Implements or debugs CSS layouts, responsive styles, themes and motion with native features (container queries, `:has()`, cascade layers, logical properties, `light-dark()`, and more), with browser-support caveats. Not for unrelated frontend logic. |
 | [piv-commit](skills/piv-commit/SKILL.md) | Commits all uncommitted changes (tracked and untracked) as one atomic commit with a conventional `<tag>: <description>` message, then prints a What Changed summary and lists any changed `.claude/` files. Follows the `## commit` section of `.claude/references/conventions.md` when the project has one. |
+| [piv-create-pr](skills/piv-create-pr/SKILL.md) | Pushes a committed feature branch and opens a GitHub pull request with `gh`. Detects the base branch, stops on the base branch, with uncommitted changes, with nothing to merge, or when a PR already exists, and writes a body with summary, changes, validation, reviewer notes and linked tickets. Follows the `## pr` section of `.claude/references/conventions.md`. |
+| [piv-fix-review-findings](skills/piv-fix-review-findings/SKILL.md) | Works through code-review findings from a person or an AI. Sorts each into fix now, defer (logged as an issue), needs a human look, or noise; asks when the scope is unclear; fixes one at a time with a test; validates; and commits and pushes when the work is on a PR. |
 | [slack-block-kit](skills/slack-block-kit/SKILL.md) | Builds or debugs Slack Block Kit payloads for messages, modals, App Home, streaming responses and Work Object unfurls: block and element limits, surfaces, and interaction schemas. Not for plain text formatting. |
 | [slack-mrkdwn](skills/slack-mrkdwn/SKILL.md) | Formats or debugs Slack message text: mrkdwn vs. standard Markdown vs. `rich_text` vs. `plain_text`, mentions, links, dates and escaping. Not for Block Kit layout. |
 
@@ -200,6 +202,7 @@ Some skills and tooling here are adapted from other open-source repositories:
 - [ccheney/robust-skills](https://github.com/ccheney/robust-skills) (MIT):
   `feature-slicing`, `mermaid-diagrams`, `modern-css`, `slack-block-kit`,
   `slack-mrkdwn`, the skill validator and the evaluation harness.
-- [coleam00/skills](https://github.com/coleam00/skills) (MIT): `piv-commit`.
+- [coleam00/skills](https://github.com/coleam00/skills) (MIT): `piv-commit`,
+  `piv-create-pr`, `piv-fix-review-findings`.
 
 See [LICENSE](LICENSE).

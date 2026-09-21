@@ -1,0 +1,12 @@
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/main
+
+$ git branch --show-current
+feature/empty-branch
+
+$ git status --short
+
+$ git log origin/main..HEAD --oneline
+
+$ gh pr list --head feature/empty-branch --json url
+[]

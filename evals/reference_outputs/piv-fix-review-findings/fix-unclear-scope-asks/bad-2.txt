@@ -1,0 +1,19 @@
+{
+  "fix_now": [
+    "F1"
+  ],
+  "defer": [],
+  "needs_human": [],
+  "noise": [],
+  "ask_user": true,
+  "fixes": [
+    {
+      "id": "F1",
+      "what_was_wrong": "timing leak",
+      "test": "constant-time compare test"
+    }
+  ],
+  "issues_to_create": [],
+  "run_validation": false,
+  "commit_and_push": false
+}

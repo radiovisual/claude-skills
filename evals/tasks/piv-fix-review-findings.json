@@ -1,0 +1,876 @@
+[
+  {
+    "id": "fix-scope-security-only",
+    "skill": "piv-fix-review-findings",
+    "category": "triage",
+    "group": "piv-fix-review-findings/fix-scope-security-only",
+    "split": "development",
+    "prompt": "Work through this review. Scope: fix only the security issue now; defer everything else. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-scope-security-only/context.txt",
+      "fixtures/piv-fix-review-findings/fix-scope-security-only/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-scope-security-only/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-scope-security-only/bad-1.txt",
+        "fails": [
+          "fix-now",
+          "defer"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-scope-security-only/bad-2.txt",
+        "fails": [
+          "test-for-F1"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [
+          "F1"
+        ],
+        "description": "fix_now is exactly ['F1']"
+      },
+      {
+        "id": "defer",
+        "op": "set_equals",
+        "path": [
+          "defer"
+        ],
+        "value": [
+          "F2",
+          "F3"
+        ],
+        "description": "defer is exactly ['F2', 'F3']"
+      },
+      {
+        "id": "test-for-F1",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F1"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F1 is fixed with a test"
+      }
+    ]
+  },
+  {
+    "id": "fix-unclear-scope-asks",
+    "skill": "piv-fix-review-findings",
+    "category": "triage",
+    "group": "piv-fix-review-findings/fix-unclear-scope-asks",
+    "split": "development",
+    "prompt": "Here's the review of my change. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-unclear-scope-asks/context.txt",
+      "fixtures/piv-fix-review-findings/fix-unclear-scope-asks/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-unclear-scope-asks/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-unclear-scope-asks/bad-1.txt",
+        "fails": [
+          "asks-first",
+          "nothing-fixed-yet"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-unclear-scope-asks/bad-2.txt",
+        "fails": [
+          "nothing-fixed-yet"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "asks-first",
+        "op": "equals",
+        "path": [
+          "ask_user"
+        ],
+        "value": true,
+        "description": "Surfaces grouped findings and asks instead of fixing everything"
+      },
+      {
+        "id": "nothing-fixed-yet",
+        "op": "length",
+        "path": [
+          "fixes"
+        ],
+        "max": 0,
+        "description": "Makes no fixes before the triage decision"
+      }
+    ]
+  },
+  {
+    "id": "fix-noise-finding",
+    "skill": "piv-fix-review-findings",
+    "category": "triage",
+    "group": "piv-fix-review-findings/fix-noise-finding",
+    "split": "development",
+    "prompt": "Fix every real finding in this review now; drop anything that isn't real, with a reason. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-noise-finding/context.txt",
+      "fixtures/piv-fix-review-findings/fix-noise-finding/review.md",
+      "fixtures/piv-fix-review-findings/fix-noise-finding/src/cart/average.ts"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-noise-finding/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-noise-finding/bad-1.txt",
+        "fails": [
+          "fix-now",
+          "noise"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-noise-finding/bad-2.txt",
+        "fails": [
+          "fix-now",
+          "noise",
+          "test-for-F1"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [
+          "F1"
+        ],
+        "description": "fix_now is exactly ['F1']"
+      },
+      {
+        "id": "noise",
+        "op": "set_equals",
+        "path": [
+          "noise"
+        ],
+        "value": [
+          "F2"
+        ],
+        "description": "noise is exactly ['F2']"
+      },
+      {
+        "id": "test-for-F1",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F1"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F1 is fixed with a test"
+      }
+    ]
+  },
+  {
+    "id": "fix-needs-manual-check",
+    "skill": "piv-fix-review-findings",
+    "category": "triage",
+    "group": "piv-fix-review-findings/fix-needs-manual-check",
+    "split": "holdout",
+    "prompt": "Fix what you can from this review and flag anything that needs someone to look at or test by hand. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-needs-manual-check/context.txt",
+      "fixtures/piv-fix-review-findings/fix-needs-manual-check/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-needs-manual-check/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-needs-manual-check/bad-1.txt",
+        "fails": [
+          "fix-now",
+          "needs-human"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-needs-manual-check/bad-2.txt",
+        "fails": [
+          "needs-human"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [
+          "F1"
+        ],
+        "description": "fix_now is exactly ['F1']"
+      },
+      {
+        "id": "needs-human",
+        "op": "set_equals",
+        "path": [
+          "needs_human"
+        ],
+        "value": [
+          "F2"
+        ],
+        "description": "needs_human is exactly ['F2']"
+      },
+      {
+        "id": "test-for-F1",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F1"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F1 is fixed with a test"
+      }
+    ]
+  },
+  {
+    "id": "fix-defer-out-of-scope",
+    "skill": "piv-fix-review-findings",
+    "category": "triage",
+    "group": "piv-fix-review-findings/fix-defer-out-of-scope",
+    "split": "development",
+    "prompt": "Address this review. Keep this PR small: fix what belongs to the login change and log anything else for later. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-defer-out-of-scope/context.txt",
+      "fixtures/piv-fix-review-findings/fix-defer-out-of-scope/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-defer-out-of-scope/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-defer-out-of-scope/bad-1.txt",
+        "fails": [
+          "fix-now",
+          "defer",
+          "issues-to-create"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-defer-out-of-scope/bad-2.txt",
+        "fails": [
+          "issues-to-create"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [
+          "F1"
+        ],
+        "description": "fix_now is exactly ['F1']"
+      },
+      {
+        "id": "defer",
+        "op": "set_equals",
+        "path": [
+          "defer"
+        ],
+        "value": [
+          "F2"
+        ],
+        "description": "defer is exactly ['F2']"
+      },
+      {
+        "id": "issues-to-create",
+        "op": "set_equals",
+        "path": [
+          "issues_to_create"
+        ],
+        "value": [
+          "F2"
+        ],
+        "description": "issues_to_create is exactly ['F2']"
+      },
+      {
+        "id": "test-for-F1",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F1"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F1 is fixed with a test"
+      }
+    ]
+  },
+  {
+    "id": "fix-test-per-fix",
+    "skill": "piv-fix-review-findings",
+    "category": "fixing",
+    "group": "piv-fix-review-findings/fix-test-per-fix",
+    "split": "development",
+    "prompt": "Fix all three findings now. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-test-per-fix/context.txt",
+      "fixtures/piv-fix-review-findings/fix-test-per-fix/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-test-per-fix/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-test-per-fix/bad-1.txt",
+        "fails": [
+          "test-for-F3"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-test-per-fix/bad-2.txt",
+        "fails": [
+          "validates"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [
+          "F1",
+          "F2",
+          "F3"
+        ],
+        "description": "fix_now is exactly ['F1', 'F2', 'F3']"
+      },
+      {
+        "id": "test-for-F1",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F1"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F1 is fixed with a test"
+      },
+      {
+        "id": "test-for-F2",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F2"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F2 is fixed with a test"
+      },
+      {
+        "id": "test-for-F3",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F3"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F3 is fixed with a test"
+      },
+      {
+        "id": "validates",
+        "op": "equals",
+        "path": [
+          "run_validation"
+        ],
+        "value": true,
+        "description": "Runs validation after fixing"
+      }
+    ]
+  },
+  {
+    "id": "fix-on-pr-pushes",
+    "skill": "piv-fix-review-findings",
+    "category": "delivery",
+    "group": "piv-fix-review-findings/fix-on-pr-pushes",
+    "split": "development",
+    "prompt": "Fix the finding in this review of my PR. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-on-pr-pushes/context.txt",
+      "fixtures/piv-fix-review-findings/fix-on-pr-pushes/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-on-pr-pushes/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-on-pr-pushes/bad-1.txt",
+        "fails": [
+          "push"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-on-pr-pushes/bad-2.txt",
+        "fails": [
+          "push"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [
+          "F1"
+        ],
+        "description": "fix_now is exactly ['F1']"
+      },
+      {
+        "id": "test-for-F1",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F1"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F1 is fixed with a test"
+      },
+      {
+        "id": "push",
+        "op": "equals",
+        "path": [
+          "commit_and_push"
+        ],
+        "value": true,
+        "description": "Commits and pushes so the PR reflects the fix"
+      }
+    ]
+  },
+  {
+    "id": "fix-local-no-push",
+    "skill": "piv-fix-review-findings",
+    "category": "delivery",
+    "group": "piv-fix-review-findings/fix-local-no-push",
+    "split": "holdout",
+    "prompt": "Fix the finding from my local review. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-local-no-push/context.txt",
+      "fixtures/piv-fix-review-findings/fix-local-no-push/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-local-no-push/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-local-no-push/bad-1.txt",
+        "fails": [
+          "no-push"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-local-no-push/bad-2.txt",
+        "fails": [
+          "validates"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [
+          "F1"
+        ],
+        "description": "fix_now is exactly ['F1']"
+      },
+      {
+        "id": "test-for-F1",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F1"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F1 is fixed with a test"
+      },
+      {
+        "id": "no-push",
+        "op": "equals",
+        "path": [
+          "commit_and_push"
+        ],
+        "value": false,
+        "description": "No PR, so nothing is pushed"
+      },
+      {
+        "id": "validates",
+        "op": "equals",
+        "path": [
+          "run_validation"
+        ],
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "fix-all-deferred",
+    "skill": "piv-fix-review-findings",
+    "category": "delivery",
+    "group": "piv-fix-review-findings/fix-all-deferred",
+    "split": "development",
+    "prompt": "We're releasing today, so don't change code: defer every finding in this review. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-all-deferred/context.txt",
+      "fixtures/piv-fix-review-findings/fix-all-deferred/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-all-deferred/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-all-deferred/bad-1.txt",
+        "fails": [
+          "issues-to-create"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-all-deferred/bad-2.txt",
+        "fails": [
+          "no-push"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [],
+        "description": "fix_now is exactly []"
+      },
+      {
+        "id": "defer",
+        "op": "set_equals",
+        "path": [
+          "defer"
+        ],
+        "value": [
+          "F1",
+          "F2",
+          "F3"
+        ],
+        "description": "defer is exactly ['F1', 'F2', 'F3']"
+      },
+      {
+        "id": "issues-to-create",
+        "op": "set_equals",
+        "path": [
+          "issues_to_create"
+        ],
+        "value": [
+          "F1",
+          "F2",
+          "F3"
+        ],
+        "description": "issues_to_create is exactly ['F1', 'F2', 'F3']"
+      },
+      {
+        "id": "no-push",
+        "op": "equals",
+        "path": [
+          "commit_and_push"
+        ],
+        "value": false,
+        "description": "Nothing fixed, so nothing to push"
+      }
+    ]
+  },
+  {
+    "id": "fix-severity-scope",
+    "skill": "piv-fix-review-findings",
+    "category": "triage",
+    "group": "piv-fix-review-findings/fix-severity-scope",
+    "split": "holdout",
+    "prompt": "Apply this PR review. Fix critical and high findings now; defer medium and low. Do not edit files; decide what you would do. Return only JSON with \"fix_now\", \"defer\", \"needs_human\", \"noise\" (arrays of finding IDs), \"ask_user\" (boolean: stop and ask how to triage before fixing), \"fixes\" (array of {\"id\", \"what_was_wrong\", \"test\"} for findings you fix), \"issues_to_create\" (finding IDs to log in the tracker), \"run_validation\" (boolean) and \"commit_and_push\" (boolean).",
+    "inputs": [
+      "fixtures/piv-fix-review-findings/fix-severity-scope/context.txt",
+      "fixtures/piv-fix-review-findings/fix-severity-scope/review.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-fix-review-findings/fix-severity-scope/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-severity-scope/bad-1.txt",
+        "fails": [
+          "fix-now",
+          "defer",
+          "test-for-F2"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-fix-review-findings/fix-severity-scope/bad-2.txt",
+        "fails": [
+          "fix-now",
+          "defer"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "fix-now",
+        "op": "set_equals",
+        "path": [
+          "fix_now"
+        ],
+        "value": [
+          "F2",
+          "F3"
+        ],
+        "description": "fix_now is exactly ['F2', 'F3']"
+      },
+      {
+        "id": "defer",
+        "op": "set_equals",
+        "path": [
+          "defer"
+        ],
+        "value": [
+          "F1",
+          "F4"
+        ],
+        "description": "defer is exactly ['F1', 'F4']"
+      },
+      {
+        "id": "test-for-F2",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F2"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F2 is fixed with a test"
+      },
+      {
+        "id": "test-for-F3",
+        "op": "any",
+        "path": [
+          "fixes"
+        ],
+        "checks": [
+          {
+            "id": "id",
+            "op": "equals",
+            "path": [
+              "id"
+            ],
+            "value": "F3"
+          },
+          {
+            "id": "test",
+            "op": "length",
+            "path": [
+              "test"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "F3 is fixed with a test"
+      }
+    ]
+  }
+]

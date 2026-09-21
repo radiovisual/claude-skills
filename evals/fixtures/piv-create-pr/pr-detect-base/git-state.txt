@@ -1,0 +1,14 @@
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/develop
+
+$ git branch --show-current
+feature/csv-export
+
+$ git status --short
+
+$ git log origin/develop..HEAD --oneline
+a1b2c3d feat: add CSV export endpoint for orders
+4e5f6a7 test: cover CSV export headers
+
+$ gh pr list --head feature/csv-export --json url
+[]

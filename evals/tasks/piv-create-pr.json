@@ -1,0 +1,551 @@
+[
+  {
+    "id": "pr-on-base-branch",
+    "skill": "piv-create-pr",
+    "category": "guards",
+    "group": "piv-create-pr/pr-on-base-branch",
+    "split": "development",
+    "prompt": "Open a PR for my work. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-on-base-branch/git-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-on-base-branch/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-on-base-branch/bad-1.txt",
+        "fails": [
+          "stops"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-on-base-branch/bad-2.txt",
+        "fails": [
+          "base"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stops",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "stop",
+        "description": "Stops instead of opening a PR"
+      },
+      {
+        "id": "base",
+        "op": "equals",
+        "path": [
+          "base"
+        ],
+        "value": "main"
+      }
+    ]
+  },
+  {
+    "id": "pr-uncommitted-changes",
+    "skill": "piv-create-pr",
+    "category": "guards",
+    "group": "piv-create-pr/pr-uncommitted-changes",
+    "split": "development",
+    "prompt": "Push this branch and open the pull request. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-uncommitted-changes/git-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-uncommitted-changes/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-uncommitted-changes/bad-1.txt",
+        "fails": [
+          "stops"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-uncommitted-changes/bad-2.txt",
+        "fails": [
+          "stops"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stops",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "stop",
+        "description": "Stops instead of opening a PR"
+      }
+    ]
+  },
+  {
+    "id": "pr-nothing-ahead",
+    "skill": "piv-create-pr",
+    "category": "guards",
+    "group": "piv-create-pr/pr-nothing-ahead",
+    "split": "holdout",
+    "prompt": "Create the PR for this branch. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-nothing-ahead/git-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-nothing-ahead/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-nothing-ahead/bad-1.txt",
+        "fails": [
+          "stops"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-nothing-ahead/bad-2.txt",
+        "fails": [
+          "stops"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stops",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "stop",
+        "description": "Stops instead of opening a PR"
+      }
+    ]
+  },
+  {
+    "id": "pr-already-open",
+    "skill": "piv-create-pr",
+    "category": "guards",
+    "group": "piv-create-pr/pr-already-open",
+    "split": "development",
+    "prompt": "Open a pull request for the CSV export branch. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-already-open/git-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-already-open/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-already-open/bad-1.txt",
+        "fails": [
+          "stops",
+          "existing-url"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-already-open/bad-2.txt",
+        "fails": [
+          "existing-url"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stops",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "stop",
+        "description": "Stops instead of opening a PR"
+      },
+      {
+        "id": "existing-url",
+        "op": "equals",
+        "path": [
+          "existing_pr_url"
+        ],
+        "value": "https://github.com/acme/shop/pull/57",
+        "description": "Reports the existing PR URL"
+      }
+    ]
+  },
+  {
+    "id": "pr-detect-base",
+    "skill": "piv-create-pr",
+    "category": "base-branch",
+    "group": "piv-create-pr/pr-detect-base",
+    "split": "development",
+    "prompt": "Open the PR for this branch. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-detect-base/git-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-detect-base/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-detect-base/bad-1.txt",
+        "fails": [
+          "detected-base"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-detect-base/bad-2.txt",
+        "fails": [
+          "detected-base"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "creates",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "create",
+        "description": "Opens the PR"
+      },
+      {
+        "id": "detected-base",
+        "op": "equals",
+        "path": [
+          "base"
+        ],
+        "value": "develop",
+        "description": "Uses origin/HEAD instead of assuming main"
+      },
+      {
+        "id": "typed-title",
+        "op": "matches",
+        "path": [
+          "title"
+        ],
+        "value": "(\\[[A-Z]+-\\d+\\] )?(feat|fix|refactor|docs|test|chore|perf|build|ci)(\\([^)]+\\))?!?: \\S.*",
+        "description": "Title is {type}: {description}"
+      }
+    ]
+  },
+  {
+    "id": "pr-base-argument",
+    "skill": "piv-create-pr",
+    "category": "base-branch",
+    "group": "piv-create-pr/pr-base-argument",
+    "split": "holdout",
+    "prompt": "Open the PR with --base release/2.4. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-base-argument/git-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-base-argument/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-base-argument/bad-1.txt",
+        "fails": [
+          "argument-base"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-base-argument/bad-2.txt",
+        "fails": [
+          "typed-title"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "creates",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "create",
+        "description": "Opens the PR"
+      },
+      {
+        "id": "argument-base",
+        "op": "equals",
+        "path": [
+          "base"
+        ],
+        "value": "release/2.4",
+        "description": "An explicit --base wins over detection"
+      },
+      {
+        "id": "typed-title",
+        "op": "matches",
+        "path": [
+          "title"
+        ],
+        "value": "(\\[[A-Z]+-\\d+\\] )?(feat|fix|refactor|docs|test|chore|perf|build|ci)(\\([^)]+\\))?!?: \\S.*",
+        "description": "Title is {type}: {description}"
+      }
+    ]
+  },
+  {
+    "id": "pr-default-body",
+    "skill": "piv-create-pr",
+    "category": "body",
+    "group": "piv-create-pr/pr-default-body",
+    "split": "development",
+    "prompt": "My branch is committed. Open the PR. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-default-body/git-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-default-body/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-default-body/bad-1.txt",
+        "fails": [
+          "default-sections"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-default-body/bad-2.txt",
+        "fails": [
+          "typed-title"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "creates",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "create",
+        "description": "Opens the PR"
+      },
+      {
+        "id": "typed-title",
+        "op": "matches",
+        "path": [
+          "title"
+        ],
+        "value": "(\\[[A-Z]+-\\d+\\] )?(feat|fix|refactor|docs|test|chore|perf|build|ci)(\\([^)]+\\))?!?: \\S.*",
+        "description": "Title is {type}: {description}"
+      },
+      {
+        "id": "default-sections",
+        "op": "contains_all",
+        "path": [
+          "body"
+        ],
+        "value": [
+          "## Summary",
+          "## What changed",
+          "## Validation",
+          "## Notes for the reviewer",
+          "## Linked"
+        ],
+        "description": "Body uses the default template sections"
+      }
+    ]
+  },
+  {
+    "id": "pr-report-deviations",
+    "skill": "piv-create-pr",
+    "category": "body",
+    "group": "piv-create-pr/pr-report-deviations",
+    "split": "development",
+    "prompt": "Implementation is done and committed. Open the PR for review. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-report-deviations/git-state.txt",
+      "fixtures/piv-create-pr/pr-report-deviations/.claude/reports/session-cache-report.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-report-deviations/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-report-deviations/bad-1.txt",
+        "fails": [
+          "deviation-in-notes"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-report-deviations/bad-2.txt",
+        "fails": [
+          "deviation-in-notes"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "creates",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "create",
+        "description": "Opens the PR"
+      },
+      {
+        "id": "typed-title",
+        "op": "matches",
+        "path": [
+          "title"
+        ],
+        "value": "(\\[[A-Z]+-\\d+\\] )?(feat|fix|refactor|docs|test|chore|perf|build|ci)(\\([^)]+\\))?!?: \\S.*",
+        "description": "Title is {type}: {description}"
+      },
+      {
+        "id": "default-sections",
+        "op": "contains_all",
+        "path": [
+          "body"
+        ],
+        "value": [
+          "## Summary",
+          "## What changed",
+          "## Validation",
+          "## Notes for the reviewer",
+          "## Linked"
+        ],
+        "description": "Body uses the default template sections"
+      },
+      {
+        "id": "deviation-in-notes",
+        "op": "matches",
+        "path": [
+          "body"
+        ],
+        "value": "(?is).*## Notes for the reviewer[^#]*(lru|redis|in-process)[^#]*## Linked.*",
+        "description": "The documented deviation appears under Notes for the reviewer"
+      }
+    ]
+  },
+  {
+    "id": "pr-linked-ticket",
+    "skill": "piv-create-pr",
+    "category": "body",
+    "group": "piv-create-pr/pr-linked-ticket",
+    "split": "holdout",
+    "prompt": "Open a pull request for this ticket. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-linked-ticket/git-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-linked-ticket/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-linked-ticket/bad-1.txt",
+        "fails": [
+          "linked-refs"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-linked-ticket/bad-2.txt",
+        "fails": [
+          "linked-refs"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "creates",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "create",
+        "description": "Opens the PR"
+      },
+      {
+        "id": "typed-title",
+        "op": "matches",
+        "path": [
+          "title"
+        ],
+        "value": "(\\[[A-Z]+-\\d+\\] )?(feat|fix|refactor|docs|test|chore|perf|build|ci)(\\([^)]+\\))?!?: \\S.*",
+        "description": "Title is {type}: {description}"
+      },
+      {
+        "id": "linked-refs",
+        "op": "matches",
+        "path": [
+          "body"
+        ],
+        "value": "(?is).*## Linked[^#]*(ACC-212[^#]*#88|#88[^#]*ACC-212).*",
+        "description": "Links both the branch ticket and the issue fixed by a commit"
+      }
+    ]
+  },
+  {
+    "id": "pr-project-conventions",
+    "skill": "piv-create-pr",
+    "category": "conventions",
+    "group": "piv-create-pr/pr-project-conventions",
+    "split": "development",
+    "prompt": "Open the PR for this branch, following our project conventions. Do not run git or gh; the command output below is the current state. Return only JSON with \"action\" (\"create\" or \"stop\"), \"message\" (what you tell the user), \"base\" (the base branch), \"existing_pr_url\" (string or null), \"title\" (string or null), \"body\" (string or null) and \"draft\" (boolean).",
+    "inputs": [
+      "fixtures/piv-create-pr/pr-project-conventions/git-state.txt",
+      "fixtures/piv-create-pr/pr-project-conventions/.claude/references/conventions.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-create-pr/pr-project-conventions/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-create-pr/pr-project-conventions/bad-1.txt",
+        "fails": [
+          "ticket-title"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-create-pr/pr-project-conventions/bad-2.txt",
+        "fails": [
+          "draft"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "creates",
+        "op": "equals",
+        "path": [
+          "action"
+        ],
+        "value": "create",
+        "description": "Opens the PR"
+      },
+      {
+        "id": "ticket-title",
+        "op": "matches",
+        "path": [
+          "title"
+        ],
+        "value": "\\[ACC-301\\] feat(\\([^)]+\\))?: \\S.*",
+        "description": "Title follows the ## pr convention"
+      },
+      {
+        "id": "draft",
+        "op": "equals",
+        "path": [
+          "draft"
+        ],
+        "value": true,
+        "description": "Opens as a draft per conventions"
+      }
+    ]
+  }
+]

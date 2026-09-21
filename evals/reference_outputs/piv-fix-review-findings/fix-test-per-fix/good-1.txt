@@ -1,0 +1,31 @@
+{
+  "fix_now": [
+    "F1",
+    "F2",
+    "F3"
+  ],
+  "defer": [],
+  "needs_human": [],
+  "noise": [],
+  "ask_user": false,
+  "fixes": [
+    {
+      "id": "F1",
+      "what_was_wrong": "F1 described a real defect.",
+      "test": "Regression test covering F1."
+    },
+    {
+      "id": "F2",
+      "what_was_wrong": "F2 described a real defect.",
+      "test": "Regression test covering F2."
+    },
+    {
+      "id": "F3",
+      "what_was_wrong": "F3 described a real defect.",
+      "test": "Regression test covering F3."
+    }
+  ],
+  "issues_to_create": [],
+  "run_validation": true,
+  "commit_and_push": false
+}

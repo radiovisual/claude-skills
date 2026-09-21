@@ -24,7 +24,9 @@
       "css-responsive-cards",
       "slack-table-rows",
       "slack-escape-untrusted",
-      "commit-docs-untracked"
+      "commit-docs-untracked",
+      "pr-default-body",
+      "fix-scope-security-only"
     ]
   }
 }

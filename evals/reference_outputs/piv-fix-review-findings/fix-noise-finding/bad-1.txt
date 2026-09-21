@@ -1,0 +1,25 @@
+{
+  "fix_now": [
+    "F1",
+    "F2"
+  ],
+  "defer": [],
+  "needs_human": [],
+  "noise": [],
+  "ask_user": false,
+  "fixes": [
+    {
+      "id": "F1",
+      "what_was_wrong": "NaN",
+      "test": "empty cart"
+    },
+    {
+      "id": "F2",
+      "what_was_wrong": "null",
+      "test": "undefined items"
+    }
+  ],
+  "issues_to_create": [],
+  "run_validation": true,
+  "commit_and_push": false
+}

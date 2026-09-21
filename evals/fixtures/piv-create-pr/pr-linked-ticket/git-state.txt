@@ -1,0 +1,13 @@
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/main
+
+$ git branch --show-current
+feature/ACC-212-password-reset
+
+$ git status --short
+
+$ git log origin/main..HEAD --oneline
+7d6e5f4 feat: add password reset email (Fixes #88)
+
+$ gh pr list --head feature/ACC-212-password-reset --json url
+[]

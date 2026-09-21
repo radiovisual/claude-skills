@@ -1,0 +1,9 @@
+{
+  "action": "stop",
+  "message": "There are uncommitted changes (src/export/csv.ts, notes.txt). Commit or stash them before opening the PR.",
+  "base": "main",
+  "existing_pr_url": null,
+  "title": null,
+  "body": null,
+  "draft": false
+}

@@ -1,0 +1,9 @@
+{
+  "action": "stop",
+  "message": "You're on main. Create a feature branch first; the ticket should be on its own branch.",
+  "base": "master",
+  "existing_pr_url": null,
+  "title": null,
+  "body": null,
+  "draft": false
+}

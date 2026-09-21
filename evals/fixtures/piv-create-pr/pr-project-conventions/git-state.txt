@@ -1,0 +1,13 @@
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/main
+
+$ git branch --show-current
+feature/ACC-301-audit-log
+
+$ git status --short
+
+$ git log origin/main..HEAD --oneline
+3c4d5e6 feat: record admin actions in an audit log
+
+$ gh pr list --head feature/ACC-301-audit-log --json url
+[]

@@ -1,0 +1,9 @@
+{
+  "action": "stop",
+  "message": "A PR already exists for this branch: https://github.com/acme/shop/pull/57",
+  "base": "main",
+  "existing_pr_url": "https://github.com/acme/shop/pull/57",
+  "title": null,
+  "body": null,
+  "draft": false
+}

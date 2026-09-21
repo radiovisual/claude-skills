@@ -1,0 +1,21 @@
+{
+  "fix_now": [
+    "F1"
+  ],
+  "defer": [],
+  "needs_human": [
+    "F2"
+  ],
+  "noise": [],
+  "ask_user": false,
+  "fixes": [
+    {
+      "id": "F1",
+      "what_was_wrong": "F1 described a real defect.",
+      "test": "Regression test covering F1."
+    }
+  ],
+  "issues_to_create": [],
+  "run_validation": true,
+  "commit_and_push": true
+}

@@ -1,0 +1,2 @@
+Branch: feature/login-rate-limit, open PR #57 (https://github.com/acme/shop/pull/57).
+The PR adds rate limiting to login.

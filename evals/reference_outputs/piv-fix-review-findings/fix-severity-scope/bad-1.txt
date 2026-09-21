@@ -1,0 +1,27 @@
+{
+  "fix_now": [
+    "F3"
+  ],
+  "defer": [
+    "F1",
+    "F2",
+    "F4"
+  ],
+  "needs_human": [],
+  "noise": [],
+  "ask_user": false,
+  "fixes": [
+    {
+      "id": "F3",
+      "what_was_wrong": "auth",
+      "test": "unauthenticated export returns 401"
+    }
+  ],
+  "issues_to_create": [
+    "F1",
+    "F2",
+    "F4"
+  ],
+  "run_validation": true,
+  "commit_and_push": true
+}

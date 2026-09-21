@@ -1,0 +1,9 @@
+{
+  "action": "create",
+  "message": "There are uncommitted changes (src/export/csv.ts, notes.txt). Commit or stash them before opening the PR.",
+  "base": "main",
+  "existing_pr_url": null,
+  "title": "feat: add CSV export",
+  "body": "## Summary\nAdds CSV export for orders.\n\n## What changed\n- feat: add CSV export endpoint for orders\n- test: cover CSV export headers\n\n## Validation\n- Tests / type-check / lint: pass\n- Manual check: pending review\n\n## Notes for the reviewer\nnone\n\n## Linked\nnone\n\n_Ready for review._",
+  "draft": true
+}

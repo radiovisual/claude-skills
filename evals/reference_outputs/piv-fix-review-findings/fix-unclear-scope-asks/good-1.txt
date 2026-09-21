@@ -1,0 +1,11 @@
+{
+  "fix_now": [],
+  "defer": [],
+  "needs_human": [],
+  "noise": [],
+  "ask_user": true,
+  "fixes": [],
+  "issues_to_create": [],
+  "run_validation": false,
+  "commit_and_push": false
+}

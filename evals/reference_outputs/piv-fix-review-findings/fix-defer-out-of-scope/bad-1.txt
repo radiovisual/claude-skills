@@ -1,0 +1,25 @@
+{
+  "fix_now": [
+    "F1",
+    "F2"
+  ],
+  "defer": [],
+  "needs_human": [],
+  "noise": [],
+  "ask_user": false,
+  "fixes": [
+    {
+      "id": "F1",
+      "what_was_wrong": "ip",
+      "test": "forwarded ip"
+    },
+    {
+      "id": "F2",
+      "what_was_wrong": "dup",
+      "test": "format"
+    }
+  ],
+  "issues_to_create": [],
+  "run_validation": true,
+  "commit_and_push": true
+}

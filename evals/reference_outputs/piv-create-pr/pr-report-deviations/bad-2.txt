@@ -1,0 +1,9 @@
+{
+  "action": "create",
+  "message": "Opened the PR. Ready for review: run /code-review, then a human approves.",
+  "base": "main",
+  "existing_pr_url": null,
+  "title": "feat: cache sessions to cut auth latency",
+  "body": "## Summary\nCaches sessions with an in-process LRU instead of Redis.\n\n## What changed\n- feat: cache sessions to cut auth latency\n\n## Validation\n- Tests / type-check / lint: pass\n\n## Notes for the reviewer\nnone\n\n## Linked\nnone\n\n_Ready for review._",
+  "draft": false
+}

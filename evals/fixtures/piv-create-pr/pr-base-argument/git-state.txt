@@ -1,0 +1,13 @@
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/main
+
+$ git branch --show-current
+fix/rounding
+
+$ git status --short
+
+$ git log origin/release/2.4..HEAD --oneline
+9c8b7a6 fix: round invoice totals half-up
+
+$ gh pr list --head fix/rounding --json url
+[]

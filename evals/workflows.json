@@ -22,5 +22,13 @@
   {
     "skill": "piv-commit",
     "prompt": "Use $piv-commit in a repository with one modified tracked file and one new untracked file, where .claude/references/conventions.md has a ## commit section requiring a scope. Commit everything, follow the conventions, then print the What Changed summary. Do not push."
+  },
+  {
+    "skill": "piv-create-pr",
+    "prompt": "Use $piv-create-pr on a feature branch with two commits ahead of the default branch and a clean working tree, in a throwaway GitHub repository. Open the PR as a draft and report its URL, base and head branches."
+  },
+  {
+    "skill": "piv-fix-review-findings",
+    "prompt": "Use $piv-fix-review-findings with a review file containing one real bug, one out-of-scope refactor and one incorrect finding. Scope: fix the bug, defer the refactor. Add a test for the fix, run validation, and report fixed, deferred and dropped findings. Do not push."
   }
 ]

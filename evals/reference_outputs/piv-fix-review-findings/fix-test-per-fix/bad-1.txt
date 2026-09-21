@@ -1,0 +1,26 @@
+{
+  "fix_now": [
+    "F1",
+    "F2",
+    "F3"
+  ],
+  "defer": [],
+  "needs_human": [],
+  "noise": [],
+  "ask_user": false,
+  "fixes": [
+    {
+      "id": "F1",
+      "what_was_wrong": "mutation",
+      "test": "addDays does not mutate input"
+    },
+    {
+      "id": "F2",
+      "what_was_wrong": "saturday",
+      "test": "saturday is weekend"
+    }
+  ],
+  "issues_to_create": [],
+  "run_validation": true,
+  "commit_and_push": false
+}

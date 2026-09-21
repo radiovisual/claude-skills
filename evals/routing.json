@@ -1192,10 +1192,12 @@
     "owner": "piv-commit",
     "kind": "boundary",
     "prompt": "Open a pull request for my branch with a summary of the changes.",
-    "expected_skills": [],
+    "expected_skills": [
+      "piv-create-pr"
+    ],
     "split": "development",
     "group": "piv-commit/piv-commit-boundary",
-    "rationale": "Creating a pull request is a later step than committing and is outside this skill."
+    "rationale": "Opening a pull request is piv-create-pr's job, not a commit."
   },
   {
     "id": "piv-commit-near-miss",
@@ -1228,5 +1230,150 @@
     "split": "holdout",
     "group": "piv-commit/piv-commit-indirect-7",
     "rationale": "Checking in changes with a tag is committing with a conventional message."
+  },
+  {
+    "id": "piv-create-pr-direct",
+    "owner": "piv-create-pr",
+    "kind": "direct",
+    "prompt": "Open a pull request for this branch.",
+    "expected_skills": [
+      "piv-create-pr"
+    ],
+    "split": "development",
+    "group": "piv-create-pr/piv-create-pr-direct",
+    "rationale": "Explicit request to open a PR."
+  },
+  {
+    "id": "piv-create-pr-indirect",
+    "owner": "piv-create-pr",
+    "kind": "indirect",
+    "prompt": "My feature branch is all committed. Get it up on GitHub so someone can review it.",
+    "expected_skills": [
+      "piv-create-pr"
+    ],
+    "split": "development",
+    "group": "piv-create-pr/piv-create-pr-indirect",
+    "rationale": "Pushing a committed branch for review means opening a PR."
+  },
+  {
+    "id": "piv-create-pr-negative",
+    "owner": "piv-create-pr",
+    "kind": "negative",
+    "prompt": "What's the difference between a merge commit and a squash merge?",
+    "expected_skills": [],
+    "split": "development",
+    "group": "piv-create-pr/piv-create-pr-negative",
+    "rationale": "A git question, not a request to open a PR."
+  },
+  {
+    "id": "piv-create-pr-incomplete",
+    "owner": "piv-create-pr",
+    "kind": "incomplete",
+    "prompt": "PR this.",
+    "expected_skills": [
+      "piv-create-pr"
+    ],
+    "split": "development",
+    "group": "piv-create-pr/piv-create-pr-incomplete",
+    "rationale": "Terse PR request; the skill detects the base branch and state itself."
+  },
+  {
+    "id": "piv-create-pr-boundary",
+    "owner": "piv-create-pr",
+    "kind": "boundary",
+    "prompt": "Review pull request #42 and leave comments on the risky parts.",
+    "expected_skills": [],
+    "split": "development",
+    "group": "piv-create-pr/piv-create-pr-boundary",
+    "rationale": "Reviewing an existing PR is outside this skill, which only opens PRs."
+  },
+  {
+    "id": "piv-create-pr-near-miss",
+    "owner": "piv-create-pr",
+    "kind": "near-miss",
+    "prompt": "Pull the latest changes from origin into my branch.",
+    "expected_skills": [],
+    "split": "holdout",
+    "group": "piv-create-pr/piv-create-pr-near-miss",
+    "rationale": "\"Pull\" here means git pull, not a pull request."
+  },
+  {
+    "id": "piv-create-pr-mixed",
+    "owner": "piv-create-pr",
+    "kind": "mixed",
+    "prompt": "Commit everything and then open a PR for it.",
+    "expected_skills": [
+      "piv-commit",
+      "piv-create-pr"
+    ],
+    "split": "holdout",
+    "group": "piv-create-pr/piv-create-pr-mixed",
+    "rationale": "Needs a commit first, then a PR."
+  },
+  {
+    "id": "piv-fix-review-findings-direct",
+    "owner": "piv-fix-review-findings",
+    "kind": "direct",
+    "prompt": "Fix the findings from this code review file.",
+    "expected_skills": [
+      "piv-fix-review-findings"
+    ],
+    "split": "development",
+    "group": "piv-fix-review-findings/piv-fix-review-findings-direct",
+    "rationale": "Explicit request to act on review findings."
+  },
+  {
+    "id": "piv-fix-review-findings-indirect",
+    "owner": "piv-fix-review-findings",
+    "kind": "indirect",
+    "prompt": "The reviewer left eight comments on my PR. Help me decide which to handle now, and fix those.",
+    "expected_skills": [
+      "piv-fix-review-findings"
+    ],
+    "split": "development",
+    "group": "piv-fix-review-findings/piv-fix-review-findings-indirect",
+    "rationale": "Triaging and fixing review comments."
+  },
+  {
+    "id": "piv-fix-review-findings-negative",
+    "owner": "piv-fix-review-findings",
+    "kind": "negative",
+    "prompt": "Review my diff for bugs before I open a PR.",
+    "expected_skills": [],
+    "split": "development",
+    "group": "piv-fix-review-findings/piv-fix-review-findings-negative",
+    "rationale": "Producing a review is outside this skill, which acts on an existing review."
+  },
+  {
+    "id": "piv-fix-review-findings-incomplete",
+    "owner": "piv-fix-review-findings",
+    "kind": "incomplete",
+    "prompt": "Deal with the review.",
+    "expected_skills": [
+      "piv-fix-review-findings"
+    ],
+    "split": "development",
+    "group": "piv-fix-review-findings/piv-fix-review-findings-incomplete",
+    "rationale": "Terse request; the skill asks how to triage when scope is unclear."
+  },
+  {
+    "id": "piv-fix-review-findings-boundary",
+    "owner": "piv-fix-review-findings",
+    "kind": "boundary",
+    "prompt": "Write a code review for pull request #12.",
+    "expected_skills": [],
+    "split": "development",
+    "group": "piv-fix-review-findings/piv-fix-review-findings-boundary",
+    "rationale": "Writing a review, not fixing its findings."
+  },
+  {
+    "id": "piv-fix-review-findings-near-miss",
+    "owner": "piv-fix-review-findings",
+    "kind": "near-miss",
+    "prompt": "This unit test started failing after the upgrade; fix it.",
+    "expected_skills": [],
+    "split": "holdout",
+    "group": "piv-fix-review-findings/piv-fix-review-findings-near-miss",
+    "rationale": "Fixing a failing test is ordinary debugging, not acting on review findings."
   }
 ]

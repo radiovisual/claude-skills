@@ -1,0 +1,9 @@
+{
+  "action": "stop",
+  "message": "Nothing to PR: feature/empty-branch has no commits ahead of main.",
+  "base": "main",
+  "existing_pr_url": null,
+  "title": null,
+  "body": null,
+  "draft": false
+}

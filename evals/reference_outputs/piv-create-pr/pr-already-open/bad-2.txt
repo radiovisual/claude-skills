@@ -1,0 +1,9 @@
+{
+  "action": "stop",
+  "message": "A PR already exists for this branch.",
+  "base": "main",
+  "existing_pr_url": null,
+  "title": null,
+  "body": null,
+  "draft": false
+}

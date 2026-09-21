@@ -1,0 +1,9 @@
+{
+  "action": "create",
+  "message": "Opened the PR. Ready for review: run /code-review, then a human approves.",
+  "base": "main",
+  "existing_pr_url": null,
+  "title": "CSV export",
+  "body": "## Summary\nAdds CSV export for orders.\n\n## What changed\n- feat: add CSV export endpoint for orders\n- test: cover CSV export headers\n\n## Validation\n- Tests / type-check / lint: pass\n- Manual check: pending review\n\n## Notes for the reviewer\nnone\n\n## Linked\nnone\n\n_Ready for review._",
+  "draft": false
+}

@@ -1,0 +1,13 @@
+$ git symbolic-ref refs/remotes/origin/HEAD
+refs/remotes/origin/main
+
+$ git branch --show-current
+feature/session-cache
+
+$ git status --short
+
+$ git log origin/main..HEAD --oneline
+1a2b3c4 feat: cache sessions to cut auth latency
+
+$ gh pr list --head feature/session-cache --json url
+[]

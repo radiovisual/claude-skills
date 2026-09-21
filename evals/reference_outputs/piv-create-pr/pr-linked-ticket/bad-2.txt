@@ -1,0 +1,9 @@
+{
+  "action": "create",
+  "message": "Opened the PR. Ready for review: run /code-review, then a human approves.",
+  "base": "main",
+  "existing_pr_url": null,
+  "title": "feat: add password reset email",
+  "body": "## Summary\nLets users reset their password by email (ACC-212).\n\n## What changed\n- feat: add password reset email\n\n## Validation\n- Tests / type-check / lint: pass\n\n## Notes for the reviewer\nnone\n\n## Linked\nFixes 88\n\n_Ready for review._",
+  "draft": false
+}
