@@ -128,7 +128,20 @@ verify command again.
 ## Phase 7: Gate 3 and wrap-up
 
 Show: tasks done with their evidence, the end-to-end check result, review findings and how each was handled, and
-anything deferred. Then offer, and do only on a yes:
+anything deferred.
+
+**Close the work folder** before the PR, so the PR carries its final state. Ask what to keep (see "After the work"
+in [DOCUMENTS.md](references/DOCUMENTS.md)):
+
+- **Keep only SPEC.md** (recommended): it records why the change was made this way. PLAN.md and LOG.md are
+  removed; their evidence lives on in the commits and the PR.
+- **Keep all three**: for when the full story, failures included, is worth having in the repository.
+- **Delete the folder**: when the PR description is record enough.
+
+For anything kept, set SPEC.md to `Status: done (<date>)`. Commit the result with `piv-commit`. If a PR is opened
+next, add its link to SPEC.md afterwards in a small follow-up commit on the same branch.
+
+Then offer, and do only on a yes:
 
 - Open a PR with `piv-create-pr` (link the issue: `Fixes #N`).
 - For a bug, comment on the issue with the root cause and the fix.

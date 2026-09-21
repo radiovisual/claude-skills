@@ -6,5 +6,6 @@
   "tasks": [],
   "verified": false,
   "recovery": "none",
+  "work_docs": null,
   "message": "Task 1 verified; pasting the output into PLAN.md and committing."
 }

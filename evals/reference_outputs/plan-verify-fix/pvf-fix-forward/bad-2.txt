@@ -6,5 +6,6 @@
   "tasks": [],
   "verified": null,
   "recovery": "fix_forward",
+  "work_docs": null,
   "message": "The approach is right; the existing test already fails, so fix the query to exclude the source video and rerun."
 }

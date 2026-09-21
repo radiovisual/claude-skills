@@ -125,6 +125,8 @@ The workflow skills chain together. Each one is also useful on its own.
    - Then it builds each task on its own: test first, verify, paste the evidence, commit with `piv-commit`.
    - For bugs, it first shows you a failing test that reproduces the problem.
    - After `/clear`, `/plan-verify-fix resume <slug>` picks up from the files.
+   - At the end, it asks what to keep in the work folder. The recommended choice
+     keeps only `SPEC.md`, marked done, as a record of why the change was made.
 3. **Review and ship**: an independent review (`/code-review` or the plan-reviewer
    subagent), findings handled with `piv-fix-review-findings`, a pull request
    with `piv-create-pr`, and releases with `semver-release`.

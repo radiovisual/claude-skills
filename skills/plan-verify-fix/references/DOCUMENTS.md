@@ -9,7 +9,7 @@ they explain the change to reviewers).
 ```markdown
 # <Feature or bug title>
 
-Status: draft | approved (<date>)
+Status: draft | approved (<date>) | done (<date>, PR <link>)
 Source: <issue URL, or "request from <date>">
 
 ## Goal
@@ -75,3 +75,23 @@ One dated line per event, newest last:
 ```
 
 The log is what makes the retro and the CLAUDE.md lessons honest.
+
+## After the work
+
+Each work folder covers one feature or bug. It is small and it stops changing once the work merges; the next piece
+of work gets a new folder. Over time you collect folders, not one ever-growing spec.
+
+At wrap-up (Phase 7), ask what to keep:
+
+| Choice | Keeps | When |
+|--------|-------|------|
+| Keep only SPEC.md (recommended) | Why the change was made this way | Most work. The plan and log have served their purpose; commits and the PR hold the evidence. |
+| Keep all three | The full story, including failures and recoveries | Work you expect to revisit or learn from |
+| Delete the folder | Nothing; the PR description is the record | Small or throwaway work |
+
+Whatever is kept, mark SPEC.md `Status: done` with the date, and add the PR link once the PR exists, so nobody
+mistakes it for current documentation. Old folders can be deleted whenever they stop being useful.
+
+A spec that keeps growing during the work means the scope is creeping: finish the planned work and start a new run
+for the rest. Documents that describe the system as it is now (architecture, data model, API docs) are different:
+update them through a task in PLAN.md that names them in its files, not by editing an old spec.

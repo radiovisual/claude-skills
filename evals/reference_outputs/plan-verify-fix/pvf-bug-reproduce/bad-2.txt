@@ -6,5 +6,6 @@
   "tasks": [],
   "verified": null,
   "recovery": "none",
+  "work_docs": null,
   "message": "I'll write a failing test showing the session is lost after reload, then ask you to confirm it matches #142."
 }

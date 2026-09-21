@@ -5,7 +5,7 @@
     "category": "sizing",
     "group": "plan-verify-fix/pvf-small-change",
     "split": "development",
-    "prompt": "/plan-verify-fix Change the home page title from 'Home' to 'MewTube'. You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix Change the home page title from 'Home' to 'MewTube'. You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-small-change/state.md"
     ],
@@ -74,7 +74,7 @@
     "category": "sizing",
     "group": "plan-verify-fix/pvf-feature-interview",
     "split": "development",
-    "prompt": "/plan-verify-fix Add subscriptions: users can subscribe to channels and see a subscriptions feed. You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix Add subscriptions: users can subscribe to channels and see a subscriptions feed. You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-feature-interview/state.md"
     ],
@@ -124,7 +124,7 @@
     "category": "subagents",
     "group": "plan-verify-fix/pvf-research-fanout",
     "split": "development",
-    "prompt": "/plan-verify-fix resume subscriptions You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume subscriptions You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-research-fanout/state.md"
     ],
@@ -211,7 +211,7 @@
     "category": "planning",
     "group": "plan-verify-fix/pvf-plan-tasks",
     "split": "development",
-    "prompt": "/plan-verify-fix resume dark-mode You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume dark-mode You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-plan-tasks/SPEC.md",
       "fixtures/plan-verify-fix/pvf-plan-tasks/state.md"
@@ -296,7 +296,7 @@
     "category": "bugs",
     "group": "plan-verify-fix/pvf-bug-reproduce",
     "split": "development",
-    "prompt": "/plan-verify-fix https://github.com/acme/mewtube/issues/142 You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix https://github.com/acme/mewtube/issues/142 You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-bug-reproduce/issue-142.md",
       "fixtures/plan-verify-fix/pvf-bug-reproduce/state.md"
@@ -356,7 +356,7 @@
     "category": "verification",
     "group": "plan-verify-fix/pvf-evidence-missing",
     "split": "development",
-    "prompt": "/plan-verify-fix resume dark-mode (picking up task 2) You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume dark-mode (picking up task 2) You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-evidence-missing/PLAN.md",
       "fixtures/plan-verify-fix/pvf-evidence-missing/last-turn.md"
@@ -407,7 +407,7 @@
     "category": "verification",
     "group": "plan-verify-fix/pvf-evidence-present",
     "split": "holdout",
-    "prompt": "/plan-verify-fix resume dark-mode --quiet You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume dark-mode --quiet You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-evidence-present/PLAN.md",
       "fixtures/plan-verify-fix/pvf-evidence-present/last-output.txt"
@@ -458,7 +458,7 @@
     "category": "recovery",
     "group": "plan-verify-fix/pvf-fix-forward",
     "split": "development",
-    "prompt": "/plan-verify-fix resume related-videos You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume related-videos You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-fix-forward/state.md"
     ],
@@ -508,7 +508,7 @@
     "category": "recovery",
     "group": "plan-verify-fix/pvf-roll-back",
     "split": "holdout",
-    "prompt": "/plan-verify-fix resume search You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume search You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-roll-back/state.md"
     ],
@@ -558,7 +558,7 @@
     "category": "recovery",
     "group": "plan-verify-fix/pvf-two-strikes",
     "split": "development",
-    "prompt": "/plan-verify-fix resume uploads You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume uploads You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-two-strikes/LOG.md",
       "fixtures/plan-verify-fix/pvf-two-strikes/state.md"
@@ -609,7 +609,7 @@
     "category": "recovery",
     "group": "plan-verify-fix/pvf-bad-migration",
     "split": "holdout",
-    "prompt": "/plan-verify-fix resume channels You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume channels You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-bad-migration/state.md"
     ],
@@ -649,7 +649,7 @@
     "category": "verification",
     "group": "plan-verify-fix/pvf-visual-gate",
     "split": "development",
-    "prompt": "/plan-verify-fix resume watch-page You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\") and \"message\" (what you tell the user).",
+    "prompt": "/plan-verify-fix resume watch-page You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
     "inputs": [
       "fixtures/plan-verify-fix/pvf-visual-gate/state.md"
     ],
@@ -690,6 +690,56 @@
         ],
         "value": false,
         "description": "Not verified until the visual check is done"
+      }
+    ]
+  },
+  {
+    "id": "pvf-close-work-folder",
+    "skill": "plan-verify-fix",
+    "category": "wrap-up",
+    "group": "plan-verify-fix/pvf-close-work-folder",
+    "split": "development",
+    "prompt": "/plan-verify-fix resume dark-mode (final review approved) You are running /plan-verify-fix. Don't edit files; decide the next step from the state below. Return only JSON with \"mode\" (\"small\", \"feature\", \"bug\" or \"resume\"), \"next_action\" (one of \"interview\", \"research\", \"write_spec\", \"reproduce\", \"plan\", \"implement\", \"run_verify\", \"write_failing_test\", \"commit\", \"roll_back\", \"open_pr\", \"ask_user\"), \"gate\" (one of \"none\", \"approve_spec\", \"approve_plan\", \"confirm_reproduction\", \"visual_check\", \"final_review\", \"ask_user\"), \"subagents\" (array of {\"type\", \"question\", \"read_only\"} you would launch now, else []), \"tasks\" (array of {\"title\", \"files\", \"out_of_scope\", \"check\"} if you are writing the plan now, else []), \"verified\" (true/false when judging whether a task is verified, else null), \"recovery\" (one of \"none\", \"fix_forward\", \"roll_back\", \"two_strikes\", \"new_migration\"), \"work_docs\" (\"keep_spec\", \"keep_all\" or \"delete\": what you recommend doing with the work folder when closing it, else null) and \"message\" (what you tell the user).",
+    "inputs": [
+      "fixtures/plan-verify-fix/pvf-close-work-folder/PLAN.md",
+      "fixtures/plan-verify-fix/pvf-close-work-folder/state.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/plan-verify-fix/pvf-close-work-folder/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-close-work-folder/bad-1.txt",
+        "fails": [
+          "close-first"
+        ]
+      },
+      {
+        "path": "reference_outputs/plan-verify-fix/pvf-close-work-folder/bad-2.txt",
+        "fails": [
+          "recommend-spec"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "close-first",
+        "op": "equals",
+        "path": [
+          "next_action"
+        ],
+        "value": "ask_user",
+        "description": "Asks how to close the work folder before opening the PR"
+      },
+      {
+        "id": "recommend-spec",
+        "op": "equals",
+        "path": [
+          "work_docs"
+        ],
+        "value": "keep_spec",
+        "description": "Recommends keeping only SPEC.md"
       }
     ]
   }

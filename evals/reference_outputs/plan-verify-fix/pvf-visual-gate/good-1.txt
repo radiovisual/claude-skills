@@ -6,5 +6,6 @@
   "tasks": [],
   "verified": false,
   "recovery": "none",
+  "work_docs": null,
   "message": "Verify passes. I can't take screenshots here: please open /watch/1 and compare it with design/watch.png."
 }

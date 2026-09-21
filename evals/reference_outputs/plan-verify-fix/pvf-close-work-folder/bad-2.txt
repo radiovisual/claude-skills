@@ -1,0 +1,11 @@
+{
+  "mode": "resume",
+  "next_action": "ask_user",
+  "gate": "final_review",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "none",
+  "work_docs": "keep_all",
+  "message": "Before the PR: keep only SPEC.md (recommended, marked done), keep all three files, or delete the folder?"
+}

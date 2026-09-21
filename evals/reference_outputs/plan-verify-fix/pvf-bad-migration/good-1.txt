@@ -6,5 +6,6 @@
   "tasks": [],
   "verified": null,
   "recovery": "new_migration",
+  "work_docs": null,
   "message": "Reset the local database with db:reset, then add 0008 changing owner_id to UUID. /rewind wouldn't undo the database."
 }

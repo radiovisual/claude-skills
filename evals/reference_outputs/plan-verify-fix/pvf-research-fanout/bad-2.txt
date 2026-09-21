@@ -17,5 +17,6 @@
   "tasks": [],
   "verified": null,
   "recovery": "none",
+  "work_docs": null,
   "message": "Next step."
 }

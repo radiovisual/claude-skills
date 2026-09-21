@@ -6,5 +6,6 @@
   "tasks": [],
   "verified": null,
   "recovery": "none",
+  "work_docs": null,
   "message": "Before planning: what does done look like, and what's out of scope?"
 }

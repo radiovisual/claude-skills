@@ -1,0 +1,11 @@
+{
+  "mode": "resume",
+  "next_action": "open_pr",
+  "gate": "final_review",
+  "subagents": [],
+  "tasks": [],
+  "verified": null,
+  "recovery": "none",
+  "work_docs": "keep_spec",
+  "message": "Opening the PR now."
+}
