@@ -1,0 +1,9 @@
+{
+  "files_to_stage": [
+    "README.md",
+    "docs/setup.md"
+  ],
+  "message": "docs: add setup guide for environment variables",
+  "what_changed": "Adds a setup guide documenting the API_URL and API_TOKEN environment variables and links it from the README so new contributors can configure the app.",
+  "ai_layer_changes": []
+}

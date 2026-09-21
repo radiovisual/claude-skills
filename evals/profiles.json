@@ -1,0 +1,30 @@
+{
+  "smoke": {
+    "routing": [
+      "modern-css-indirect",
+      "modern-css-negative",
+      "slack-mrkdwn-indirect",
+      "slack-block-kit-negative"
+    ],
+    "tasks": [
+      "slack-escape-untrusted",
+      "checkout-placement",
+      "mermaid-reserved-id"
+    ]
+  },
+  "full": {
+    "routing": "all",
+    "tasks": "all"
+  },
+  "coverage": {
+    "routing": [],
+    "tasks": [
+      "checkout-placement",
+      "mermaid-reserved-id",
+      "css-responsive-cards",
+      "slack-table-rows",
+      "slack-escape-untrusted",
+      "commit-docs-untracked"
+    ]
+  }
+}

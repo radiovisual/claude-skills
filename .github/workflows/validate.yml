@@ -1,0 +1,54 @@
+name: Validate skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Metadata, eval inventory and harness tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python3 -m pip install -r evals/requirements.txt
+      - name: Validate skill metadata and resource links
+        run: python3 scripts/validate_skills.py
+      - name: Validate eval tasks, controls, routing and profiles
+        run: python3 -m evals.validation
+      - name: Harness unit tests (no model calls)
+        run: python3 -m unittest evals.test_evals evals.test_contracts
+
+  calibrate:
+    name: Grader calibration (Docker)
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python3 -m pip install -r evals/requirements.txt
+      - name: Build the sandboxed grading runtime
+        run: python3 -m evals.prepare
+      - name: Docker-backed grader tests
+        run: RUN_DOCKER_EVAL_TESTS=1 python3 -m unittest evals.test_evals evals.test_contracts
+      - name: Check every reference passes and every counterexample fails
+        run: python3 -m evals.calibrate --jobs 3
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: calibration
+          path: evals/results/calibration.json
+          if-no-files-found: ignore

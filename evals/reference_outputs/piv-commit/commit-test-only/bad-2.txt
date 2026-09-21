@@ -1,0 +1,9 @@
+{
+  "files_to_stage": [
+    "tests/helpers.ts",
+    "tests/auth.test.ts"
+  ],
+  "message": "fix: login tests",
+  "what_changed": "Adds login tests in tests/auth.test.ts covering wrong-password rejection, plus a makeUser helper in tests/helpers.ts for building test users. Production code is unchanged.",
+  "ai_layer_changes": []
+}

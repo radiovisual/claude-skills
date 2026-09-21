@@ -1,0 +1,706 @@
+[
+  {
+    "id": "commit-docs-untracked",
+    "skill": "piv-commit",
+    "category": "staging",
+    "group": "piv-commit/commit-docs-untracked",
+    "split": "development",
+    "prompt": "Commit all of our uncommitted work. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-docs-untracked/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-docs-untracked/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-docs-untracked/bad-1.txt",
+        "fails": [
+          "stage-all"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-docs-untracked/bad-2.txt",
+        "fails": [
+          "conventional-tag"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "README.md",
+          "docs/setup.md"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(docs)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag docs"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      }
+    ]
+  },
+  {
+    "id": "commit-bugfix-with-test",
+    "skill": "piv-commit",
+    "category": "tagging",
+    "group": "piv-commit/commit-bugfix-with-test",
+    "split": "development",
+    "prompt": "The pagination fix is done and tested. Commit it. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-bugfix-with-test/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-bugfix-with-test/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-bugfix-with-test/bad-1.txt",
+        "fails": [
+          "conventional-tag"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-bugfix-with-test/bad-2.txt",
+        "fails": [
+          "stage-all"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "src/pagination.ts",
+          "tests/pagination.test.ts"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(fix)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag fix"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      }
+    ]
+  },
+  {
+    "id": "commit-new-feature",
+    "skill": "piv-commit",
+    "category": "tagging",
+    "group": "piv-commit/commit-new-feature",
+    "split": "development",
+    "prompt": "CSV export works now. Please commit everything. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-new-feature/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-new-feature/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-new-feature/bad-1.txt",
+        "fails": [
+          "conventional-tag"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-new-feature/bad-2.txt",
+        "fails": [
+          "stage-all"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "src/routes.ts",
+          "src/export/csv.ts"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(feat)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag feat"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      }
+    ]
+  },
+  {
+    "id": "commit-refactor-rename",
+    "skill": "piv-commit",
+    "category": "staging",
+    "group": "piv-commit/commit-refactor-rename",
+    "split": "holdout",
+    "prompt": "I renamed the formatter module and updated the import; behavior is unchanged. Commit it. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-refactor-rename/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-refactor-rename/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-refactor-rename/bad-1.txt",
+        "fails": [
+          "stage-all"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-refactor-rename/bad-2.txt",
+        "fails": [
+          "conventional-tag"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "src/app.ts",
+          "src/utils/fmt.ts",
+          "src/utils/format.ts"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(refactor)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag refactor"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      }
+    ]
+  },
+  {
+    "id": "commit-test-only",
+    "skill": "piv-commit",
+    "category": "tagging",
+    "group": "piv-commit/commit-test-only",
+    "split": "development",
+    "prompt": "I only added tests for the login flow. Commit them. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-test-only/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-test-only/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-test-only/bad-1.txt",
+        "fails": [
+          "conventional-tag"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-test-only/bad-2.txt",
+        "fails": [
+          "conventional-tag"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "tests/helpers.ts",
+          "tests/auth.test.ts"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(test)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag test"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      }
+    ]
+  },
+  {
+    "id": "commit-dependency-bump",
+    "skill": "piv-commit",
+    "category": "tagging",
+    "group": "piv-commit/commit-dependency-bump",
+    "split": "development",
+    "prompt": "Commit the lodash patch update. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-dependency-bump/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-dependency-bump/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-dependency-bump/bad-1.txt",
+        "fails": [
+          "conventional-tag"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-dependency-bump/bad-2.txt",
+        "fails": [
+          "conventional-tag"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "package.json",
+          "package-lock.json"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(chore|build)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag chore|build"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      }
+    ]
+  },
+  {
+    "id": "commit-conventions-scope",
+    "skill": "piv-commit",
+    "category": "conventions",
+    "group": "piv-commit/commit-conventions-scope",
+    "split": "development",
+    "prompt": "Commit the token expiry fix following this project's conventions. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-conventions-scope/repo-state.txt",
+      "fixtures/piv-commit/commit-conventions-scope/.claude/references/conventions.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-conventions-scope/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-conventions-scope/bad-1.txt",
+        "fails": [
+          "project-scope"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-conventions-scope/bad-2.txt",
+        "fails": [
+          "project-scope"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "packages/api/src/auth.ts"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(fix)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag fix"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      },
+      {
+        "id": "project-scope",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)fix\\(api\\): [a-z][^\\n]{0,38}[^.\\n](\\n.*)?",
+        "description": "Follows conventions.md: fix(api) scope, lowercase subject, 50-character first line, no trailing period"
+      }
+    ]
+  },
+  {
+    "id": "commit-conventions-footer",
+    "skill": "piv-commit",
+    "category": "conventions",
+    "group": "piv-commit/commit-conventions-footer",
+    "split": "holdout",
+    "prompt": "Rate limiting is finished. Make the commit the way this repo wants it. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-conventions-footer/repo-state.txt",
+      "fixtures/piv-commit/commit-conventions-footer/.claude/references/conventions.md"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-conventions-footer/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-conventions-footer/bad-1.txt",
+        "fails": [
+          "ticket-footer"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-conventions-footer/bad-2.txt",
+        "fails": [
+          "ticket-footer"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "src/server.ts",
+          "src/middleware/rateLimit.ts"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(feat)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag feat"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      },
+      {
+        "id": "ticket-footer",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s).*\\nRefs: PROJ-481\\s*",
+        "description": "Ends with the Refs: PROJ-481 footer required by conventions.md"
+      }
+    ]
+  },
+  {
+    "id": "commit-ai-layer",
+    "skill": "piv-commit",
+    "category": "ai-layer",
+    "group": "piv-commit/commit-ai-layer",
+    "split": "development",
+    "prompt": "Commit the deploy script change together with the agent setup updates. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-ai-layer/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-ai-layer/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-ai-layer/bad-1.txt",
+        "fails": [
+          "ai-layer-count",
+          "ai-layer-skill",
+          "ai-layer-conventions"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-ai-layer/bad-2.txt",
+        "fails": [
+          "ai-layer-count"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          ".claude/skills/deploy/SKILL.md",
+          "src/deploy.ts",
+          ".claude/references/conventions.md"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(feat|fix|chore|ci|build)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag feat|fix|chore|ci|build"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      },
+      {
+        "id": "ai-layer-count",
+        "op": "length",
+        "path": [
+          "ai_layer_changes"
+        ],
+        "min": 2,
+        "max": 2,
+        "description": "Lists exactly the two files under .claude/"
+      },
+      {
+        "id": "ai-layer-skill",
+        "op": "any",
+        "path": [
+          "ai_layer_changes"
+        ],
+        "checks": [
+          {
+            "id": "path",
+            "op": "equals",
+            "path": [
+              "path"
+            ],
+            "value": ".claude/skills/deploy/SKILL.md"
+          },
+          {
+            "id": "note",
+            "op": "length",
+            "path": [
+              "note"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "Notes the deploy skill change"
+      },
+      {
+        "id": "ai-layer-conventions",
+        "op": "any",
+        "path": [
+          "ai_layer_changes"
+        ],
+        "checks": [
+          {
+            "id": "path",
+            "op": "equals",
+            "path": [
+              "path"
+            ],
+            "value": ".claude/references/conventions.md"
+          },
+          {
+            "id": "note",
+            "op": "length",
+            "path": [
+              "note"
+            ],
+            "min": 1
+          }
+        ],
+        "description": "Notes the new conventions reference"
+      }
+    ]
+  },
+  {
+    "id": "commit-no-ai-layer",
+    "skill": "piv-commit",
+    "category": "ai-layer",
+    "group": "piv-commit/commit-no-ai-layer",
+    "split": "holdout",
+    "prompt": "Commit the Claude usage docs and the export script. Do not run git; work from the repository state below. Return only JSON with \"files_to_stage\" (repository paths to add), \"message\" (the full commit message), \"what_changed\" (the summary paragraph) and \"ai_layer_changes\" (array of {\"path\", \"note\"}; an empty array when there are none).",
+    "inputs": [
+      "fixtures/piv-commit/commit-no-ai-layer/repo-state.txt"
+    ],
+    "grader": "contract",
+    "references": [
+      "reference_outputs/piv-commit/commit-no-ai-layer/good-1.txt"
+    ],
+    "counterexamples": [
+      {
+        "path": "reference_outputs/piv-commit/commit-no-ai-layer/bad-1.txt",
+        "fails": [
+          "ai-layer-empty"
+        ]
+      },
+      {
+        "path": "reference_outputs/piv-commit/commit-no-ai-layer/bad-2.txt",
+        "fails": [
+          "ai-layer-empty"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "stage-all",
+        "op": "set_equals",
+        "path": [
+          "files_to_stage"
+        ],
+        "value": [
+          "docs/claude-usage.md",
+          "scripts/claude_export.py"
+        ],
+        "description": "Stages every changed and untracked file, and nothing else"
+      },
+      {
+        "id": "conventional-tag",
+        "op": "matches",
+        "path": [
+          "message"
+        ],
+        "value": "(?s)(feat|fix|docs|refactor|test|chore|build|ci|perf|style)(\\([^)\\n]+\\))?!?: [^\\n]+(\\n.*)?",
+        "description": "First line is <tag>: <summary> with tag feat|fix|docs|refactor|test|chore|build|ci|perf|style"
+      },
+      {
+        "id": "what-changed",
+        "op": "length",
+        "path": [
+          "what_changed"
+        ],
+        "min": 40,
+        "description": "Includes a What Changed summary"
+      },
+      {
+        "id": "ai-layer-empty",
+        "op": "length",
+        "path": [
+          "ai_layer_changes"
+        ],
+        "max": 0,
+        "description": "No files under .claude/ changed, so no AI layer changes are listed"
+      }
+    ]
+  }
+]

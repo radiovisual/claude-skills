@@ -1,0 +1,8 @@
+{
+  "files_to_stage": [
+    "packages/api/src/auth.ts"
+  ],
+  "message": "fix(api): use milliseconds for token expiry",
+  "what_changed": "Fixes auth tokens expiring almost immediately: expiresAt in packages/api/src/auth.ts added seconds to a millisecond timestamp, so the TTL is now converted to milliseconds.",
+  "ai_layer_changes": []
+}

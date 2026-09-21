@@ -1,0 +1,26 @@
+[
+  {
+    "skill": "feature-slicing",
+    "prompt": "Use $feature-slicing to place a checkout-only form in our existing FSD frontend. Current tree: src/app/providers, src/pages/checkout/ui, src/pages/catalog/ui, src/shared/ui/button. Only checkout uses the form and its validation. Give file paths and allowed imports. Preserve existing tooling; this is a placement question."
+  },
+  {
+    "skill": "modern-css",
+    "prompt": "Use $modern-css to change only the hover color to the existing $accent token in this Sass component. Keep Sass and our global motion policy. Return the corrected snippet; no browser project is provided.\n$accent: #0055cc;\n.button {\n  color: white;\n  &:hover { color: red; }\n}"
+  },
+  {
+    "skill": "mermaid-diagrams",
+    "prompt": "Use $mermaid-diagrams to fix this Markdown flowchart. Preserve the two stages and their edge; our renderer accepts basic flowchart syntax. Return a .mmd artifact. If you cannot run a renderer with installed tools, say so without installing a toolchain.\nflowchart LR\n    subgraph Build\n        Build[Compile]\n    end\n    Build --> Done[Done]\n"
+  },
+  {
+    "skill": "slack-block-kit",
+    "prompt": "Use $slack-block-kit to repair this message-surface payload. Keep the warning and the complete text fallback; output JSON only, do not post.\n{\"text\":\"Dependency conflict detected before deploy.\",\"blocks\":[{\"type\":\"alert\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Dependency conflict detected* before deploy.\"},\"level\":\"warning\"}]}\n"
+  },
+  {
+    "skill": "slack-mrkdwn",
+    "prompt": "Use $slack-mrkdwn to format a Slack Work Object string field. It must say Blocked in bold and link to https://example.com/runbook with label runbook. The field is explicitly standard Markdown and should have type string, value, and format. Return the JSON object; do not post."
+  },
+  {
+    "skill": "piv-commit",
+    "prompt": "Use $piv-commit in a repository with one modified tracked file and one new untracked file, where .claude/references/conventions.md has a ## commit section requiring a scope. Commit everything, follow the conventions, then print the What Changed summary. Do not push."
+  }
+]

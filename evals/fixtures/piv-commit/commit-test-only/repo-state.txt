@@ -1,0 +1,15 @@
+$ git status --porcelain
+ M tests/helpers.ts
+?? tests/auth.test.ts
+
+$ git diff HEAD
+diff --git a/tests/helpers.ts b/tests/helpers.ts
+@@ -3,0 +4,3 @@ export const db = createTestDb();
++export function makeUser(overrides = {}) {
++  return { email: 'a@example.com', password: 'secret', ...overrides };
++}
+
+$ cat tests/auth.test.ts
+test('rejects a wrong password', async () => {
+  await expect(login(makeUser({ password: 'x' }))).rejects.toThrow();
+});

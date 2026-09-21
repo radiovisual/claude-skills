@@ -1,0 +1,9 @@
+{
+  "files_to_stage": [
+    "src/app.ts",
+    "src/utils/format.ts"
+  ],
+  "message": "refactor: rename fmt utils module to format",
+  "what_changed": "Renames src/utils/fmt.ts to src/utils/format.ts and updates the import in src/app.ts. There is no behavior change; the module name is just clearer.",
+  "ai_layer_changes": []
+}

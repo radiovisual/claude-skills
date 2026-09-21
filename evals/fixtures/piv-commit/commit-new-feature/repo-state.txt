@@ -1,0 +1,17 @@
+$ git status --porcelain
+ M src/routes.ts
+?? src/export/csv.ts
+
+$ git diff HEAD
+diff --git a/src/routes.ts b/src/routes.ts
+@@ -1,6 +1,8 @@
+ import { Router } from 'express';
++import { exportCsv } from './export/csv';
+ export const routes = Router();
+ routes.get('/orders', listOrders);
++routes.get('/orders/export.csv', exportCsv);
+
+$ cat src/export/csv.ts
+export function exportCsv(req, res) {
+  res.type('text/csv').send(toCsv(req.orders));
+}

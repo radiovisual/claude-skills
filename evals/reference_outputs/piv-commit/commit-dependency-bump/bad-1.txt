@@ -1,0 +1,9 @@
+{
+  "files_to_stage": [
+    "package.json",
+    "package-lock.json"
+  ],
+  "message": "feat: update lodash",
+  "what_changed": "Updates lodash from 4.17.20 to 4.17.21 in package.json and package-lock.json. This is a patch-level dependency update with no application code changes.",
+  "ai_layer_changes": []
+}

@@ -1,0 +1,17 @@
+$ git branch --show-current
+feature/PROJ-481-rate-limit
+
+$ git status --porcelain
+ M src/server.ts
+?? src/middleware/rateLimit.ts
+
+$ git diff HEAD
+diff --git a/src/server.ts b/src/server.ts
+@@ -5,1 +5,2 @@
+ app.use(express.json());
++app.use(rateLimit({ windowMs: 60_000, max: 100 }));
+
+$ cat src/middleware/rateLimit.ts
+export function rateLimit(opts) {
+  /* sliding window per IP */
+}

@@ -1,0 +1,21 @@
+$ git status --porcelain
+ M .claude/skills/deploy/SKILL.md
+ M src/deploy.ts
+?? .claude/references/conventions.md
+
+$ git diff HEAD
+diff --git a/src/deploy.ts b/src/deploy.ts
+@@ -9,1 +9,2 @@
+   await build();
++  await runMigrations();
+diff --git a/.claude/skills/deploy/SKILL.md b/.claude/skills/deploy/SKILL.md
+@@ -6,1 +6,2 @@
+ 1. Run `npm run build`.
++2. Run database migrations before switching traffic.
+
+$ cat .claude/references/conventions.md
+# Conventions
+
+## deploy
+
+Migrations always run before traffic moves.

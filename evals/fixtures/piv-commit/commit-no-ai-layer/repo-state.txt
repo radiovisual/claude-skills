@@ -1,0 +1,13 @@
+$ git status --porcelain
+ M docs/claude-usage.md
+?? scripts/claude_export.py
+
+$ git diff HEAD
+diff --git a/docs/claude-usage.md b/docs/claude-usage.md
+@@ -3,0 +4,2 @@
++Run `python scripts/claude_export.py` to export conversation logs as JSON.
+
+$ cat scripts/claude_export.py
+import json, sys
+
+json.dump(load_logs(sys.argv[1]), sys.stdout)

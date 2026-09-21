@@ -1,0 +1,13 @@
+$ git status --porcelain
+ M package-lock.json
+ M package.json
+
+$ git diff HEAD
+diff --git a/package.json b/package.json
+@@ -8,1 +8,1 @@
+-    "lodash": "4.17.20",
++    "lodash": "4.17.21",
+diff --git a/package-lock.json b/package-lock.json
+@@ -120,3 +120,3 @@
+-      "version": "4.17.20",
++      "version": "4.17.21",

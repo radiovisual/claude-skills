@@ -1,0 +1,9 @@
+{
+  "files_to_stage": [
+    "src/routes.ts",
+    "src/export/csv.ts"
+  ],
+  "message": "chore: add csv export",
+  "what_changed": "Adds a GET /orders/export.csv endpoint backed by a new exportCsv handler in src/export/csv.ts, registered in src/routes.ts, so users can download their orders as CSV.",
+  "ai_layer_changes": []
+}

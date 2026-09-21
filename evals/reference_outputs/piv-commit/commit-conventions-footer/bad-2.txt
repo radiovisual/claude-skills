@@ -1,0 +1,9 @@
+{
+  "files_to_stage": [
+    "src/server.ts",
+    "src/middleware/rateLimit.ts"
+  ],
+  "message": "feat: add per-IP rate limiting middleware\n\nRefs: #481",
+  "what_changed": "Adds a rateLimit middleware in src/middleware/rateLimit.ts and enables it in src/server.ts to cap each IP at 100 requests per minute, protecting the API from bursts.",
+  "ai_layer_changes": []
+}

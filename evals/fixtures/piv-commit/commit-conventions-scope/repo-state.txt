@@ -1,0 +1,8 @@
+$ git status --porcelain
+ M packages/api/src/auth.ts
+
+$ git diff HEAD
+diff --git a/packages/api/src/auth.ts b/packages/api/src/auth.ts
+@@ -20,1 +20,1 @@
+-  const expiresAt = issuedAt + ttlSeconds;
++  const expiresAt = issuedAt + ttlSeconds * 1000;

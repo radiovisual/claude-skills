@@ -1,0 +1,15 @@
+$ git status --porcelain
+ M README.md
+?? docs/setup.md
+
+$ git diff HEAD
+diff --git a/README.md b/README.md
+@@ -12,3 +12,5 @@ npm install
+ npm start
++
++See [docs/setup.md](docs/setup.md) for environment variables.
+
+$ cat docs/setup.md
+# Setup
+
+Set `API_URL` and `API_TOKEN` before running `npm start`.

@@ -1,0 +1,9 @@
+{
+  "files_to_stage": [
+    "docs/claude-usage.md",
+    "scripts/claude_export.py"
+  ],
+  "message": "feat: add script to export conversation logs",
+  "what_changed": "Adds scripts/claude_export.py, which exports conversation logs as JSON, and documents how to run it in docs/claude-usage.md.",
+  "ai_layer_changes": []
+}

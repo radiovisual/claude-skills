@@ -1,0 +1,15 @@
+$ git status --porcelain
+ M src/pagination.ts
+?? tests/pagination.test.ts
+
+$ git diff HEAD
+diff --git a/src/pagination.ts b/src/pagination.ts
+@@ -4,5 +4,5 @@ export function pageCount(total: number, size: number) {
+-  return Math.floor(total / size);
++  return Math.ceil(total / size);
+ }
+
+$ cat tests/pagination.test.ts
+test('partial last page counts', () => {
+  expect(pageCount(11, 5)).toBe(3);
+});

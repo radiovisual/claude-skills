@@ -1,0 +1,9 @@
+{
+  "files_to_stage": [
+    "src/pagination.ts",
+    "tests/pagination.test.ts"
+  ],
+  "message": "fix: count partial last page in pageCount",
+  "what_changed": "Fixes pageCount dropping the final partial page by rounding up instead of down, and adds a regression test in tests/pagination.test.ts covering a partial last page.",
+  "ai_layer_changes": []
+}
