@@ -23,25 +23,74 @@ CI checks all of it on every push and pull request.
 | [slack-block-kit](skills/slack-block-kit/SKILL.md) | Builds or debugs Slack Block Kit payloads for messages, modals, App Home, streaming responses and Work Object unfurls: block and element limits, surfaces, and interaction schemas. Not for plain text formatting. |
 | [slack-mrkdwn](skills/slack-mrkdwn/SKILL.md) | Formats or debugs Slack message text: mrkdwn vs. standard Markdown vs. `rich_text` vs. `plain_text`, mentions, links, dates and escaping. Not for Block Kit layout. |
 
-### Installing a skill
+### Installing skills
 
-Claude Code loads skills from `~/.claude/skills/` (all projects) or
-`.claude/skills/` inside a project. Copy or symlink the skill folder:
+Claude Code looks for skills in two places:
+
+- `~/.claude/skills/` for skills available in **every project** on your machine
+- `<project>/.claude/skills/` for skills available in **that project only**,
+  and to anyone else who clones it if you commit the folder
+
+Each skill is a self-contained folder, so installing means putting that folder
+in one of those places. Start a new Claude Code session (or run `/skills`) to
+pick up newly installed skills. `/skills` also lists what's installed.
+
+#### Every project (global)
+
+Clone this repository once and symlink the skills into `~/.claude/skills/`.
+Because they're links, `git pull` updates every project at once:
 
 ```bash
-git clone https://github.com/radiovisual/claude-skills.git
-# For every project:
-cp -r claude-skills/skills/modern-css ~/.claude/skills/
-# Or for one project only:
-cp -r claude-skills/skills/modern-css your-project/.claude/skills/
+git clone https://github.com/radiovisual/claude-skills.git ~/claude-skills
+mkdir -p ~/.claude/skills
+
+# All skills:
+for skill in ~/claude-skills/skills/*/; do ln -sfn "${skill%/}" ~/.claude/skills/; done
+
+# Or only the ones you want:
+ln -sfn ~/claude-skills/skills/modern-css ~/.claude/skills/
 ```
 
-The [`skills` CLI](https://skills.sh) can also install them, for Claude Code and
-other agents:
+To update, run `git -C ~/claude-skills pull`. When new skills are added,
+run the loop again; it's safe to repeat. To uninstall a skill, delete its
+link: `rm ~/.claude/skills/modern-css`.
+
+#### One project only
+
+Copy the skill into the project's `.claude/skills/` folder, then commit it so
+everyone working on the project gets the same version:
 
 ```bash
-npx skills add https://github.com/radiovisual/claude-skills --skill modern-css
+cd your-project
+mkdir -p .claude/skills
+cp -r ~/claude-skills/skills/modern-css .claude/skills/
+git add .claude/skills/modern-css
 ```
+
+This copy doesn't change when this repository does. Copy it again to update.
+
+#### With the `skills` CLI
+
+The [`skills` CLI](https://skills.sh) installs straight from this GitHub
+repository, without cloning it. Only the CLI itself comes from npm; the skills
+don't need to be published anywhere else. `--agent claude-code` targets Claude
+Code; leave it out to choose agents interactively.
+
+```bash
+# See what's available
+npx skills add https://github.com/radiovisual/claude-skills --list
+
+# One project: run inside the project; installs into ./.claude/skills/
+npx skills add https://github.com/radiovisual/claude-skills --skill modern-css --agent claude-code
+
+# Every project: -g installs at the user level
+npx skills add https://github.com/radiovisual/claude-skills --skill '*' --agent claude-code -g
+```
+
+Pass several names to `--skill` (`--skill modern-css slack-mrkdwn`) or `'*'` for
+all of them. A project install also writes a `skills-lock.json` recording what
+was installed. Update with `npx skills update` and uninstall with
+`npx skills remove <name>`.
 
 ### Using a skill
 
